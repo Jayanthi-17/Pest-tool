@@ -9,11 +9,11 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family:'Georgia', serif; 
         }
         
         body {
-            background-color: #f9f5f0;
+            background-color: #fff;
             color: #333;
             line-height: 1.6;
             padding: 20px;
@@ -22,18 +22,18 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: white;
+            background: #f9f5e8;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            border-top: 5px solid #ad2a24;
+           
         }
         
         header {
             text-align: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #eaeaea;
+            border-bottom: 2px solid #ddd4d4;
         }
         
         h1 {
@@ -51,16 +51,16 @@
         .step {
             margin-bottom: 25px;
             padding: 20px;
-            background: #f9f7f5;
+            background: #fff;
             border-radius: 8px;
-            border-left: 4px solid #ad2a24;
+            
         }
         
         .step-title {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 15px;
-            color: #ad2a24;
+            color: #af6b35;
         }
         
         .form-group {
@@ -86,8 +86,8 @@
         
         select:focus {
             outline: none;
-            border-color: #ad2a24;
-            box-shadow: 0 0 0 2px rgba(173, 42, 36, 0.2);
+            border-color: #dfebe0;
+            box-shadow: 0 0 0 2px rgba(220, 104, 89, 0.2);
         }
         
         .symptoms-container {
@@ -115,7 +115,7 @@
         
         .symptom-option input[type="radio"] {
             margin-right: 10px;
-            accent-color: #ad2a24;
+            accent-color: #4CAF50;
         }
         
         .symptom-option label {
@@ -127,15 +127,14 @@
         .result {
             margin-top: 30px;
             padding: 20px;
-            background: #fdf3f3;
+            background: #fff;
             border-radius: 8px;
-            border-left: 4px solid #ad2a24;
             display: none;
         }
         
         .result h3 {
             margin-bottom: 15px;
-            color: #ad2a24;
+            color: #af6b35;
         }
         
         .pest-info {
@@ -155,7 +154,7 @@
         
         .pest-type {
             display: inline-block;
-            background: #f1c8c6;
+            background: #f9f5e8;;
             color: #ad2a24;
             padding: 4px 8px;
             border-radius: 4px;
@@ -174,7 +173,7 @@
         .pest-link {
             display: inline-block;
             padding: 10px 15px;
-            background: #ad2a24;
+            background: #4CAF50;
             color: white;
             text-decoration: none;
             border-radius: 4px;
@@ -183,7 +182,7 @@
         }
         
         .pest-link:hover {
-            background: #8a1f1a;
+            background: #3d8b40;
         }
         
         .reset-btn {
@@ -415,9 +414,6 @@
         // Extract all unique plants from pest data
         const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
         
-        // Extract all unique affected parts from pest data
-        const allAffectedParts = [...new Set(pestData.flatMap(pest => pest.affectedParts))].sort();
-        
         // DOM elements
         const plantSelectEl = document.getElementById('plant-select');
         const problemAreaStepEl = document.getElementById('problem-area-step');
@@ -443,14 +439,6 @@
                 plantSelectEl.appendChild(option);
             });
             
-            // Populate problem area options
-            allAffectedParts.forEach(part => {
-                const option = document.createElement('option');
-                option.value = part;
-                option.textContent = part;
-                problemAreaSelectEl.appendChild(option);
-            });
-            
             // Add event listeners
             plantSelectEl.addEventListener('change', handlePlantChange);
             problemAreaSelectEl.addEventListener('change', handleProblemAreaChange);
@@ -463,6 +451,23 @@
             if (selectedPlant) {
                 // Show problem area step
                 problemAreaStepEl.style.display = 'block';
+                
+                // Clear previous problem area options
+                problemAreaSelectEl.innerHTML = '<option value="">-- Select problem area --</option>';
+                
+                // Get all affected parts for the selected plant
+                const affectedPartsForPlant = [...new Set(pestData
+                    .filter(pest => pest.plants.includes(selectedPlant))
+                    .flatMap(pest => pest.affectedParts)
+                )].sort();
+                
+                // Populate problem area options
+                affectedPartsForPlant.forEach(part => {
+                    const option = document.createElement('option');
+                    option.value = part;
+                    option.textContent = part;
+                    problemAreaSelectEl.appendChild(option);
+                });
                 
                 // Scroll to problem area step
                 problemAreaStepEl.scrollIntoView({ behavior: 'smooth' });
