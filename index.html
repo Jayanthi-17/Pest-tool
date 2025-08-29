@@ -9,7 +9,7 @@
     <div id="CalculatorContainer"></div>
 
     <script>
-        // Pest data structure based on the updated Excel content
+        // Pest data structure based on the updated Excel content - all 68 pests
         const pestData = [
             {
                 name: "Anthracnose",
@@ -22,6 +22,16 @@
                 link: "https://www.almanac.com/pest/anthracnose"
             },
             {
+                name: "Ants",
+                type: "Insect (due to aphid or scale infestations)",
+                plants: ["Various plants, especially with aphids"],
+                affectedParts: ["None directly. Ants are indicative of aphids and farming their 'honeydew'."],
+                symptoms: ["Trails of ants on stems and leaves", "Presence of aphids or scale insects", "Disturbed soil around roots", "Nests in mulch or pots"],
+                prevention: ["Keep garden tidy", "Avoid sugary fertilizers", "Prune heavily infested areas"],
+                control: ["Use ant-safe baits or diatomaceous earth if needed", "Reduce aphids to discourage ant activity"],
+                link: "https://www.almanac.com/pest/ants"
+            },
+            {
                 name: "Aphids",
                 type: "Insect (Sap-sucking pest)",
                 plants: ["Beans", "Beets", "Cucumber", "Gladiolus", "Impatiens", "Lettuce", "Melon", "Petunia", "Phlox", "Pumpkin", "Rudbeckia", "Spinach", "Squash", "Tomato"],
@@ -30,6 +40,56 @@
                 prevention: ["Monitor regularly", "Avoid over-fertilizing", "Encourage beneficial insects", "Remove weeds nearby"],
                 control: ["Spray with insecticidal soap or horticultural oil", "Introduce ladybugs or lacewings", "Hose off with water"],
                 link: "https://www.almanac.com/pest/aphids"
+            },
+            {
+                name: "Armyworm",
+                type: "Insect",
+                plants: ["Beans", "Corn", "Wheat", "Ryegrass"],
+                affectedParts: ["Leaves", "Stems", "Fruit/Vegetable"],
+                symptoms: ["Skeletonized or ragged leaves", "Chewed fruit", "Frass near feeding sites", "Visible striped caterpillars feeding in groups", "Damage often appears suddenly and spreads quickly"],
+                prevention: ["Monitor regularly", "Remove weeds", "Avoid planting susceptible crops in infested areas"],
+                control: ["Scout early and often", "Apply Bacillus thuringiensis (Bt) or spinosad", "Use neem oil", "Attract natural predators like birds and parasitic wasps"],
+                link: "https://www.almanac.com/pest/armyworms-how-get-rid-lawn-pest"
+            },
+            {
+                name: "Asparagus Bugs",
+                type: "Insect",
+                plants: ["Asparagus"],
+                affectedParts: ["Stems (spears)", "Leaves"],
+                symptoms: ["Chewed or ragged foliage", "Bent or scarred spears", "Dark eggs laid in rows on stems", "Larvae resembling tiny slugs", "Frass (insect droppings) on plants"],
+                prevention: ["Remove plant debris after harvest", "Encourage beneficial insects", "Rotate crops away from asparagus beds"],
+                control: ["Handpick beetles and larvae", "Use neem oil or insecticidal soap", "Apply sprays if infestation is severe"],
+                link: "n/a"
+            },
+            {
+                name: "Aster Yellows",
+                type: "Disease (Phytoplasma, spread by leafhoppers)",
+                plants: ["Asters", "Black-eyed Susans", "Carrots", "Celery", "Coneflowers", "Daisies", "Lettuce", "Potatoes", "Tomatoes", "Zinnias"],
+                affectedParts: ["Leaves", "Stems", "Flowers", "Roots"],
+                symptoms: ["Stunted growth", "Yellow or purple curled leaves", "Pale or green distorted flowers", "Witches' broom", "Deformed carrots", "Small or soft potato tubers", "Aerial tubers"],
+                prevention: ["Eliminate nearby weeds", "Use resistant varieties", "Monitor and manage leafhopper populations early"],
+                control: ["Remove infected plants immediately", "Control leafhoppers with floating row covers or insecticidal soap"],
+                link: "n/a"
+            },
+            {
+                name: "Black (Itersonilia) canker",
+                type: "Disease (Fungal)",
+                plants: ["Parsnips", "Carrots", "Parsley", "Coriander", "Chrysanthemums", "Asters", "Sunflowers"],
+                affectedParts: ["Roots (especially crown and shoulder)", "Leaves", "Petioles", "Inflorescences"],
+                symptoms: ["Shallow brown to black or purple-black cankers on root crowns", "Small orange to brown leaf spots with pale green halos", "Blighted flowers", "Secondary decay in root lesions"],
+                prevention: ["Rotate crops", "Cover shoulders of root crops like parsnips and carrots with soil to prevent exposure"],
+                control: ["Deep plowing to bury infected debris", "Control carrot rust fly"],
+                link: ""
+            },
+            {
+                name: "Black Root Rot",
+                type: "Disease (Fungal)",
+                plants: ["Geraniums", "Holly", "Pansies", "Petunias", "Vinca"],
+                affectedParts: ["Roots", "Lower Leaves"],
+                symptoms: ["Dark brown or black root lesions", "Pale yellow leaves", "Wilting", "Stunted growth", "Leaf drop"],
+                prevention: ["Ensure good drainage", "Avoid overwatering", "Maintain soil pH below 5.5", "Reduce plant stress", "Control fungus gnats and other vectors"],
+                control: ["Destroy infected plants", "Remove contaminated soil", "Sanitize tools and containers"],
+                link: "n/a"
             },
             {
                 name: "Blossom-End Rot",
@@ -46,10 +106,40 @@
                 type: "Insect",
                 plants: ["Broccoli", "Cabbage", "Cauliflower", "Kale"],
                 affectedParts: ["Leaves"],
-                symptoms: ["Large, ragged holes", "Skeletonized areas", "Visible frass (inset droppings)"],
+                symptoms: ["Large, ragged holes", "Skeletonized areas", "Visible frass (insect droppings)"],
                 prevention: ["Remove plant debris", "Use row covers", "Encourage beneficial insects like parasitic wasps"],
                 control: ["Handpick larvae", "Apply Bacillus thuringiensis (Bt) or spinosad to leaves"],
                 link: "https://www.almanac.com/pest/how-get-rid-cabbage-loopers"
+            },
+            {
+                name: "Cabbage Maggots",
+                type: "Insect",
+                plants: ["Broccoli", "Brussels Sprouts", "Cabbage", "Cauliflower", "Radishes", "Turnips"],
+                affectedParts: ["Roots", "Stems", "Bulbs"],
+                symptoms: ["Wilting plants", "Soft stems", "Stunted growth", "Root rot", "Tunnels in roots"],
+                prevention: ["Plant late", "Use row covers", "Rotate crops", "Destroy infected plants", "Avoid fresh manure in spring"],
+                control: ["No effective treatment once damage is visible", "Remove and destroy infected plants", "Use floating row covers to prevent egg-laying"],
+                link: "https://www.almanac.com/pest/cabbage-root-maggots"
+            },
+            {
+                name: "Cabbage Worms",
+                type: "Insect",
+                plants: ["Broccoli", "Brussels sprouts", "Cabbage", "Cauliflower", "Radishes", "Turnips"],
+                affectedParts: ["Leaves", "Heads", "Growing tips"],
+                symptoms: ["Chewed holes", "Ragged edges", "Burrowed/deformed produce", "Dark green frass", "Yellow eggs on leaves"],
+                prevention: ["Grow companion plants (e.g., thyme)", "Invite beneficial insects", "Maintain garden hygiene"],
+                control: ["Handpick worms", "Apply Bacillus thuringiensis (Bt), spinosad, or insecticidal soap", "Use row covers"],
+                link: "https://www.almanac.com/pest/cabbage-worms"
+            },
+            {
+                name: "Carrot Rust Flies",
+                type: "Insect",
+                plants: ["Carrots", "Celery", "Celeriac", "Chervil", "Parsnips", "Parsley"],
+                affectedParts: ["Leaves", "Roots"],
+                symptoms: ["Yellowing, wilting, stunted growth, reddish tunnels"],
+                prevention: ["Delay planting until after peak fly emergence", "Rotate crops yearly to non-host species", "Avoid planting near wild carrot or weeds", "Harvest carrots as soon as mature", "Remove all crop residue"],
+                control: ["Discard infested roots", "Use floating row covers to prevent adult flies from laying eggs"],
+                link: ""
             },
             {
                 name: "Colorado Potato Beetles",
@@ -62,6 +152,16 @@
                 link: "https://www.almanac.com/pest/colorado-potato-beetles"
             },
             {
+                name: "Corn Earworms",
+                type: "Insect",
+                plants: ["Beans", "Corn", "Cotton", "Peppers", "Sorghum", "Tomatoes"],
+                affectedParts: ["Fruit/Vegetable (ears)", "Silks"],
+                symptoms: ["Larvae feed on leaves, tassels, silks, and inside ears or fruit", "Entry holes at base of fruit stem", "Extensive frass (excrement)", "Distorted leaves", "Premature ripening"],
+                prevention: ["Avoid planting near large cornfields (attracts moths)", "Use early-maturing varieties to escape peak infestation", "Encourage beneficial insects (lacewings, pirate bugs)", "Monitor with pheromone traps to time interventions"],
+                control: ["Apply Bacillus thuringiensis (Bt) to silks during early silk stage", "Use spinosad or insecticidal soap", "Handpick larvae if visible"],
+                link: "n/a"
+            },
+            {
                 name: "Tomato Cracking",
                 type: "Abiotic",
                 plants: ["Tomatoes"],
@@ -70,6 +170,16 @@
                 prevention: ["Regular, deep watering instead of letting it dry out completely", "Mulch with 2 to 3 inch layer of straw, shredded leaves, or compost", "Choose crack-resistant varieties", "Harvest promptly"],
                 control: ["Harvest early to prevent rot", "Still edible but use quickly", "If deeply cracked, toss and compost"],
                 link: "https://www.almanac.com/video/top-10-tomato-problems-and-solutions"
+            },
+            {
+                name: "Crows",
+                type: "Animal",
+                plants: ["Apples", "Cherries", "Corn", "Melons", "Pumpkins", "Sorghum", "Sunflowers"],
+                affectedParts: ["Fruit"],
+                symptoms: ["Peck holes in fruit", "Consume small fruits whole", "Pull seedlings (especially corn)", "Leave fruit unsaleable", "Knock fruit to ground", "Feed on ripening grain and nuts"],
+                prevention: ["Rotate crops", "Maintain clean fields", "Avoid planting vulnerable crops near roosting areas", "Use resistant or less attractive crop varieties when available"],
+                control: ["Exclude with netting or monofilament lines", "Use scare devices (noise makers, reflective tape, predator decoys)", "Thin roost trees to reduce congregation"],
+                link: "https://www.almanac.com/pest/crows"
             },
             {
                 name: "Cucumber Beetles (Striped)",
@@ -92,6 +202,36 @@
                 link: "https://www.almanac.com/pest/cutworms"
             },
             {
+                name: "Damping Off",
+                type: "Disease (Fungal or Oomycete)",
+                plants: ["Basil", "Broccoli", "Cabbage", "Cauliflower", "Celery", "Cucumbers", "Lettuce", "Melons", "Peppers", "Spinach", "Tomatoes"],
+                affectedParts: ["Seedlings", "Stems", "Roots"],
+                symptoms: ["Seeds fail to emerge", "Seedlings collapse at soil line", "Stems turn brown or black", "Roots rot", "Patches of missing or wilted seedlings"],
+                prevention: ["Sanitize trays and tools", "Use sterile potting mix", "Avoid overwatering", "Provide good air circulation and bottom heat"],
+                control: ["Improve drainage", "Use sterile potting mix", "Avoid overwatering", "Apply biological fungicides like Trichoderma or Bacillus subtilis if needed"],
+                link: "n/a"
+            },
+            {
+                name: "Deer",
+                type: "Animal",
+                plants: ["Apples", "Beans", "Cherries", "Corn", "Hostas", "Lettuce", "Peas", "Roses", "Spinach", "Sunflowers", "Tomatoes"],
+                affectedParts: ["Leaves", "Stems", "Buds", "Fruits", "Bark"],
+                symptoms: ["Jagged tears on leaves and stems", "Stripped branches", "Missing buds or fruit", "Antler rubs on trunks", "Hoof prints or droppings nearby"],
+                prevention: ["Avoid planting deer favorites in exposed areas", "Use resistant varieties", "Rotate plantings", "Maintain clean fields"],
+                control: ["Install fencing or netting", "Use scare devices", "Apply natural repellents like garlic or hot pepper sprays"],
+                link: "https://www.almanac.com/pest/how-keep-deer-out-garden"
+            },
+            {
+                name: "Downy Mildew",
+                type: "Disease",
+                plants: ["Basil", "Broccoli", "Cucumbers", "Grapes", "Lettuce", "Melons", "Onions", "Peas", "Roses", "Spinach", "Sunflowers"],
+                affectedParts: ["Leaves", "Stems", "Flowers", "Bulbs (in onions)"],
+                symptoms: ["Yellow spots on upper leaf surface", "Gray or bluish fuzzy growth on undersides", "Leaf distortion", "Premature leaf drop", "Systemic bulb rot"],
+                prevention: ["Space plants for airflow", "Use resistant varieties", "Avoid wet foliage", "Rotate crops away from susceptible hosts"],
+                control: ["Remove infected plants", "Apply fungicides early and rotate modes of action", "Avoid overhead irrigation"],
+                link: "https://www.almanac.com/pest/downy-mildew"
+            },
+            {
                 name: "Early Blight",
                 type: "Disease",
                 plants: ["Eggplants", "Peppers", "Potatoes", "Tomatoes"],
@@ -100,6 +240,36 @@
                 prevention: ["Rotate crops", "Mulch to reduce soil splash", "Avoid overhead watering", "Plant tolerant varieties"],
                 control: ["Remove infected leaves", "Apply organic-approved fungicides like copper sprays early", "Prune for airflow"],
                 link: "https://www.almanac.com/pest/early-blight"
+            },
+            {
+                name: "Earwigs",
+                type: "Insect",
+                plants: ["Lettuce", "Spinach", "Basil", "Strawberries", "Corn", "Dahlias", "Marigolds", "Tomatoes"],
+                affectedParts: ["Leaves", "Flowers", "Fruit", "Stems"],
+                symptoms: ["Many small holes in leaves and fruit", "Seedlings clipped at ground level"],
+                prevention: ["Remove plant debris", "Reduce moisture", "Trim vegetation", "Avoid overwatering", "Seal cracks and crevices", "Encourage natural predators like birds and frogs"],
+                control: ["Trap in tuna can filled with ½ inch of fish oil, sunk in soil with rim slightly above ground", "Rolled damp newspaper traps", "Apply diatomaceous earth around plants"],
+                link: "https://www.almanac.com/pest/earwigs"
+            },
+            {
+                name: "Fire Ants",
+                type: "Insect",
+                plants: ["Beans", "Okra", "Peanuts", "Potatoes", "Sunflowers", "Tomatoes"],
+                affectedParts: ["Seeds", "Seedlings", "Roots", "Fruits"],
+                symptoms: ["Mounds near crops", "Stunted seedlings", "Chewed stems", "Ants protecting aphids", "Painful stings during harvest"],
+                prevention: ["Use bait in spring and fall", "Manage adjacent lawn populations", "Avoid overwatering", "Monitor with greasy bait tests like potato chips"],
+                control: ["Use granular baits and drenches labeled for organic use"],
+                link: "https://www.almanac.com/pest/how-get-rid-fire-ants-immediately"
+            },
+            {
+                name: "Fire Blight",
+                type: "Disease (Bacterial)",
+                plants: ["Apples", "Pears", "Quinces", "Crabapples", "Roses", "Hawthorn"],
+                affectedParts: ["Blossoms", "Shoots", "Branches", "Fruits", "Roots"],
+                symptoms: ["Blackened, scorched-looking shoots ('shepherd's crook')", "Oozing cankers", "Wilted flowers", "Dead leaves cling to branches"],
+                prevention: ["Plant resistant varieties", "Avoid high nitrogen", "Prune only in dry weather", "Sanitize tools"],
+                control: ["Prune 8–12 inches below infection during dormancy", "Sanitation is critical", "Sterilize tools between cuts", "Apply copper sprays during bloom"],
+                link: "https://www.almanac.com/pest/how-identify-and-manage-fire-blight"
             },
             {
                 name: "Flea Beetles",
@@ -112,6 +282,66 @@
                 link: "https://www.almanac.com/pest/flea-beetles"
             },
             {
+                name: "Fungus Gnats",
+                type: "Insect",
+                plants: ["Houseplants", "Seedlings", "Potted Herbs", "Ornamentals"],
+                affectedParts: ["Roots", "Stems (young plants)"],
+                symptoms: ["Tiny black flies near soil", "Larvae in topsoil", "Sudden wilting", "Poor growth", "Slime trails on soil surface"],
+                prevention: ["Let soil dry between watering", "Avoid overwatering", "Use sterile potting mix", "Remove decaying organic matter"],
+                control: ["Destroy severely infested plants (DNC)", "Apply Bacillus thuringiensis israelensis (BTi) or beneficial nematodes", "Reduce watering"],
+                link: "https://www.almanac.com/pest/fungus-gnats"
+            },
+            {
+                name: "Fusarium Wilt",
+                type: "Disease (Fungal)",
+                plants: ["Tomatoes", "Peppers", "Eggplants", "Beans", "Lettuce", "Watermelon"],
+                affectedParts: ["Leaves", "Stems", "Roots"],
+                symptoms: ["One-sided yellowing", "Wilting during heat", "Brown streaks in stem cross-section", "Stunted growth"],
+                prevention: ["Use resistant varieties (check race resistance)", "Rotate with non-host crops", "Sanitize tools and equipment"],
+                control: ["Remove infected plants", "Avoid replanting susceptible crops", "Resistant varieties"],
+                link: "https://www.almanac.com/pest/fusarium-wilt"
+            },
+            {
+                name: "Gray Mold (Botrytis)",
+                type: "Disease (Fungal)",
+                plants: ["Strawberries", "Tomatoes", "Beans", "Roses", "Peonies", "Geraniums", "Lettuce"],
+                affectedParts: ["Flowers", "Fruits", "Leaves", "Stems"],
+                symptoms: ["Gray fuzzy mold on petals or fruit", "Water-soaked spots", "Cankers on stems", "Leaf blight"],
+                prevention: ["Avoid overhead watering", "Increase spacing and airflow", "Remove spent flowers and debris", "Irrigate early in the day"],
+                control: ["Remove infected tissue", "Apply copper-based fungicides or biofungicides like Bacillus subtilis early", "Refrigerate harvested produce properly"],
+                link: "https://www.almanac.com/pest/gray-mold-or-botrytis"
+            },
+            {
+                name: "Groundhogs",
+                type: "Animal",
+                plants: ["Beans", "Peas", "Tomatoes", "Carrots", "Lettuce", "Squash"],
+                affectedParts: ["Leaves", "Stems", "Fruits", "Roots"],
+                symptoms: ["Large bites from fruit", "Burrows near garden", "Toppled plants", "Gnawed stems"],
+                prevention: ["Fence garden with 4-ft wire buried 12 inches", "Add electric wire at top", "Remove nearby brush piles and burrow sites"],
+                control: ["Use live traps with fruit bait", "Install buried fencing with L-shaped barrier"],
+                link: "https://www.almanac.com/pest/groundhogs"
+            },
+            {
+                name: "Halo Blight",
+                type: "Disease (Bacterial)",
+                plants: ["Beans (Snap, Dry, Lima)"],
+                affectedParts: ["Leaves", "Pods", "Stems"],
+                symptoms: ["Small water-soaked leaf spots with yellow halos", "Pod lesions with bacterial ooze", "Systemic yellowing in cool weather"],
+                prevention: ["Choose blight resistant varieties", "Use row covers", "Use certified disease-free seed", "Rotate with non-legumes", "Avoid overhead irrigation", "Sanitize tools"],
+                control: ["Remove infected debris", "Apply copper sprays preventively", "Avoid working in wet fields"],
+                link: "n/a"
+            },
+            {
+                name: "Japanese Beetles",
+                type: "Insect",
+                plants: ["Roses", "Grapes", "Beans", "Linden Trees", "Corn", "Apples", "Plums", "Cherries", "Peaches", "Raspberries"],
+                affectedParts: ["Leaves", "Flowers", "Fruit"],
+                symptoms: ["Skeletonized leaves (eaten between veins)", "Shiny metallic green beetles ~½ inch long"],
+                prevention: ["Cover plants after fruit set", "Avoid planting beetle-attracting species in problem areas", "Maintain healthy plants", "Delay lawn watering during peak egg-laying season", "Plant resistant varieties"],
+                control: ["Start early, handpicking beetles", "Apply neem oil or insecticidal soap early while populations are small", "Apply milky spore or beneficial nematodes to soil"],
+                link: "https://www.almanac.com/pest/japanese-beetles"
+            },
+            {
                 name: "Late Blight",
                 type: "Disease (Fungal-like)",
                 plants: ["Potatoes", "Tomatoes", "Eggplants", "Peppers"],
@@ -120,6 +350,66 @@
                 prevention: ["Plant earlier in year, select blight resistant varieties", "Use certified seed", "Destroy cull piles and volunteers", "Avoid overhead irrigation", "Monitor weather and apply fungicides preventively"],
                 control: ["Remove infected plants immediately", "Apply copper-based fungicides or biofungicides like Bacillus subtilis", "Avoid harvesting until vines are dead for 2–3 weeks"],
                 link: "https://www.almanac.com/pest/late-blight-disease-tomatoes-and-potatoes-plants"
+            },
+            {
+                name: "Leaf Hoppers",
+                type: "Insect",
+                plants: ["Beans", "Potatoes", "Apples", "Grapes", "Roses", "Dahlias", "Peas", "Eggplants", "Strawberries", "Carrots", "Lettuce", "Celery", "Ornamentals"],
+                affectedParts: ["Leaves"],
+                symptoms: ["V-shaped yellowing", "Leaf stippling", "Curling or twisted leaves", "Hopperburn (scorched edges)", "Stunted growth", "Sticky excrement", "Presence of tiny jumping insects"],
+                prevention: ["Use row covers early in season", "Rotate crops", "Attract beneficial insects (ladybugs, lacewings)", "Avoid over-fertilizing", "Maintain garden hygiene"],
+                control: ["Knock nymphs off with strong water spray", "Spray insecticidal soap or pyrethrin", "Release beneficial insects", "Remove infested leaves", "Apply kaolin clay as a deterrent"],
+                link: "https://www.almanac.com/pest/leafhoppers"
+            },
+            {
+                name: "Leaf Miners",
+                type: "Insect",
+                plants: ["Spinach", "Beets", "Chard", "Lettuce", "Peas", "Beans", "Tomatoes", "Cucumbers", "Celery", "Citrus", "Ornamentals"],
+                affectedParts: ["Leaves"],
+                symptoms: ["Squiggly trails or blotches on leaves", "Pale or translucent leaf spots", "Leaf curling", "Premature leaf drop", "Reduced vigor"],
+                prevention: ["Use row covers early", "Remove and destroy infested leaves", "Avoid over-fertilizing", "Plant trap crops nearby"],
+                control: ["Prune damaged foliage", "Apply neem oil", "Release parasitic wasps"],
+                link: "https://www.almanac.com/pest/leaf-miners"
+            },
+            {
+                name: "Leaf Spot",
+                type: "Disease (Fungal or bacterial)",
+                plants: ["Beans", "Corn", "Cucumbers", "Lettuce", "Peppers", "Roses", "Tomatoes", "Trees", "Shrubs"],
+                affectedParts: ["Leaves", "Stems (occasionally)"],
+                symptoms: ["Brown, black, or tan spots with yellow halos", "Spots may fall out leaving holes", "Premature leaf drop", "Defoliation over multiple seasons"],
+                prevention: ["Rotate crops", "Avoid overhead watering", "Mulch properly", "Space plants well", "Plant resistant varieties"],
+                control: ["Remove fallen leaves and plant debris", "Apply copper-based fungicides early", "Prune for airflow"],
+                link: "n/a"
+            },
+            {
+                name: "Mexican Bean Beetles",
+                type: "Insect",
+                plants: ["Lima Beans", "Snap beans", "Soybean"],
+                affectedParts: ["Leaves", "Adults may also feed on flowers, stems, and pods"],
+                symptoms: ["Underside of leaves between the veins", "Skeletonized appearance"],
+                prevention: ["Row covers after planting (through harvest)", "Crush egg masses by hand", "Spray Neem"],
+                control: ["Handpick", "Purchase and release beneficial wasp Pediobius foveolatus when larvae are observed", "Destroy severely infested plants"],
+                link: "https://www.almanac.com/pest/mexican-bean-beetles"
+            },
+            {
+                name: "Mice",
+                type: "Animal",
+                plants: ["Fruit trees", "Bulbs", "Vegetables", "Ornamentals", "Houseplants"],
+                affectedParts: ["Roots", "Bark", "Seeds", "Leaves"],
+                symptoms: ["Gnawed bark at base", "Burrowing in pots", "Chewed seedlings", "Droppings", "Nests in mulch or debris"],
+                prevention: ["Keep garden tidy", "Seal compost bins", "Avoid mulch piles near crops", "Use wire mesh around trunks"],
+                control: ["Use bait stations or traps", "Install tree guards", "Remove sheltering debris"],
+                link: "https://www.almanac.com/pest/mice"
+            },
+            {
+                name: "Moles",
+                type: "Animal",
+                plants: ["Lawns", "Bulbs", "Root crops", "Seedlings"],
+                affectedParts: ["Roots (indirectly)", "Soil"],
+                symptoms: ["Raised ridges in turf", "Volcano-shaped mounds", "Dislodged plants", "Uneven lawn surface"],
+                prevention: ["Maintain healthy soil", "Reduce grub populations only if needed", "Avoid overwatering", "Tolerate minor mole activity if possible"],
+                control: ["Traps", "Install underground mesh in raised beds", "Avoid ineffective repellents"],
+                link: "https://www.almanac.com/pest/moles"
             },
             {
                 name: "Mosaic Virus",
@@ -132,6 +422,16 @@
                 link: "https://www.almanac.com/pest/mosaic-viruses"
             },
             {
+                name: "Onion Maggots",
+                type: "Insect",
+                plants: ["Onions", "Garlic", "Leeks", "Shallots", "Chives"],
+                affectedParts: ["Bulbs", "Roots", "Base of stems"],
+                symptoms: ["Wilting seedlings", "Yellowing leaves", "Soft or rotting bulbs", "Maggots in bulbs", "Poor germination", "Brown tunnels inside bulbs"],
+                prevention: ["Rotate crops", "Use row covers", "Remove plant debris", "Avoid planting in cool, wet soil"],
+                control: ["No effective treatment once bulbs are infested", "Discard affected plants", "Apply beneficial nematodes preemptively", "Use insecticidal seed treatments before planting"],
+                link: "N/a but often grouped with Cabbage Maggots. Should we rename?"
+            },
+            {
                 name: "Powdery Mildew",
                 type: "Disease (Fungal)",
                 plants: ["Beans", "Cucumbers", "Eggplants", "Grapes", "Lettuce", "Melons", "Peas", "Peppers", "Roses", "Squash", "Tomatoes", "Zinnias"],
@@ -142,6 +442,136 @@
                 link: "https://www.almanac.com/pest/powdery-mildew"
             },
             {
+                name: "Rabbits",
+                type: "Animal",
+                plants: ["Beans", "Lettuce", "Peas", "Roses", "Shrubs", "Trees", "Vegetables"],
+                affectedParts: ["Leaves", "Stems", "Bark"],
+                symptoms: ["Clean 45° cuts on stems", "Gnawed bark on young trees", "Droppings nearby", "Nests in tall grass"],
+                prevention: ["Fence garden with 2-ft wire mesh buried 6 inches", "Use tree guards", "Remove brush piles"],
+                control: ["Use repellents like blood meal or garlic spray", "Install motion-activated sprinklers"],
+                link: "https://www.almanac.com/pest/rabbits"
+            },
+            {
+                name: "Raccoons",
+                type: "Animal",
+                plants: ["Corn", "Melons", "Strawberries", "Grapes", "Berries", "Garbage"],
+                affectedParts: ["Fruit", "Ears of corn"],
+                symptoms: ["Partially eaten fruit", "Torn husks on corn", "Overturned pots", "Digging in lawns"],
+                prevention: ["Harvest ripe fruit promptly", "Secure compost and garbage", "Install electric fencing"],
+                control: ["Use motion-activated lights or sprinklers", "Apply repellents like capsaicin spray"],
+                link: "https://www.almanac.com/pest/raccoons"
+            },
+            {
+                name: "Root Knot Nematodes",
+                type: "Nematode",
+                plants: ["Tomatoes", "Carrots", "Potatoes", "Beans", "Peppers", "Lettuce", "Cucumbers", "Melons"],
+                affectedParts: ["Roots"],
+                symptoms: ["Stunted growth", "Yellowing leaves", "Galls or knots on roots", "Poor yield", "Wilting despite adequate water"],
+                prevention: ["Rotate with resistant crops (corn, grains)", "Solarize soil", "Add organic matter", "Use resistant varieties"],
+                control: ["Apply beneficial nematodes or fungi", "Remove and destroy infected plants", "Avoid spreading contaminated soil"],
+                link: "https://www.almanac.com/pest/root-knot-nematodes"
+            },
+            {
+                name: "Rust",
+                type: "Disease (Fungal)",
+                plants: ["Asparagus", "Beans", "Corn", "Hollyhocks", "Roses", "Snapdragons", "Sunflowers"],
+                affectedParts: ["Leaves", "Stems"],
+                symptoms: ["Orange, yellow, or brown powdery pustules", "Leaf yellowing", "Premature defoliation", "Stunted growth"],
+                prevention: ["Space plants for airflow", "Water at base", "Remove infected debris", "Plant resistant varieties"],
+                control: ["Remove infected leaves", "Apply sulfur or copper-based fungicides early", "Avoid overhead irrigation"],
+                link: "https://www.almanac.com/pest/rust-plant-disease"
+            },
+            {
+                name: "Scale Insects",
+                type: "Insect",
+                plants: ["Apples", "Azaleas", "Citrus", "Holly", "Magnolias", "Oaks", "Roses", "Shrubs", "Trees"],
+                affectedParts: ["Stems", "Leaves", "Branches"],
+                symptoms: ["Small bumps on stems and leaves", "Yellowing leaves", "Sticky honeydew", "Sooty mold", "Stunted growth"],
+                prevention: ["Prune infested branches", "Encourage natural predators", "Avoid over-fertilizing"],
+                control: ["Scrape off scales", "Apply horticultural oil during dormancy", "Use insecticidal soap", "Release ladybugs"],
+                link: "https://www.almanac.com/pest/scale-insects"
+            },
+            {
+                name: "Slugs and Snails",
+                type: "Mollusk",
+                plants: ["Hostas", "Lettuce", "Strawberries", "Cabbage", "Basil", "Marigolds", "Tomatoes"],
+                affectedParts: ["Leaves", "Stems", "Fruits"],
+                symptoms: ["Large irregular holes", "Silvery slime trails", "Seedlings eaten to ground"],
+                prevention: ["Remove hiding places", "Water in morning", "Use copper barriers", "Encourage predators"],
+                control: ["Handpick at night", "Use beer traps", "Apply iron phosphate bait", "Sprinkle diatomaceous earth"],
+                link: "https://www.almanac.com/pest/slugs-and-snails"
+            },
+            {
+                name: "Spider Mites",
+                type: "Arachnid",
+                plants: ["Beans", "Cucumbers", "Eggplants", "Roses", "Strawberries", "Tomatoes", "Houseplants"],
+                affectedParts: ["Leaves (undersides)"],
+                symptoms: ["Fine webbing", "Yellow stippling", "Bronzed leaves", "Leaf drop", "Reduced vigor"],
+                prevention: ["Increase humidity", "Avoid dusty conditions", "Monitor regularly", "Remove weeds"],
+                control: ["Spray with water", "Apply insecticidal soap or neem oil", "Release predatory mites"],
+                link: "https://www.almanac.com/pest/spider-mites"
+            },
+            {
+                name: "Squash Bugs",
+                type: "Insect",
+                plants: ["Pumpkins", "Squash", "Cucumbers", "Melons"],
+                affectedParts: ["Leaves", "Stems", "Fruits"],
+                symptoms: ["Yellow spots that turn brown", "Wilting", "Stunted growth", "Frass on leaves"],
+                prevention: ["Use row covers", "Remove plant debris", "Handpick eggs", "Plant resistant varieties"],
+                control: ["Trap under boards", "Apply neem oil", "Use insecticidal soap", "Remove heavily infested plants"],
+                link: "https://www.almanac.com/pest/squash-bugs"
+            },
+            {
+                name: "Squash Vine Borers",
+                type: "Insect",
+                plants: ["Pumpkins", "Squash", "Zucchini", "Cucumbers"],
+                affectedParts: ["Stems"],
+                symptoms: ["Sudden wilting", "Sawdust-like frass", "Holes in stems", "Yellow eggs on stems"],
+                prevention: ["Use row covers", "Plant late", "Choose resistant varieties", "Rotate crops"],
+                control: ["Slit stems to remove borers", "Inject Bt into stems", "Remove and destroy infested plants"],
+                link: "https://www.almanac.com/pest/squash-vine-borer"
+            },
+            {
+                name: "Squirrels",
+                type: "Animal",
+                plants: ["Corn", "Sunflowers", "Tomatoes", "Fruit trees", "Bulbs"],
+                affectedParts: ["Fruits", "Seeds", "Bulbs"],
+                symptoms: ["Partially eaten fruit", "Dug-up bulbs", "Chewed husks", "Stolen produce"],
+                prevention: ["Harvest promptly", "Use baffles on poles", "Net fruit trees", "Plant daffodils (squirrel-resistant)"],
+                control: ["Use motion-activated sprinklers", "Apply hot pepper spray", "Provide alternative food sources"],
+                link: "https://www.almanac.com/pest/squirrels"
+            },
+            {
+                name: "Stink Bugs",
+                type: "Insect",
+                plants: ["Apples", "Beans", "Corn", "Peppers", "Tomatoes", "Squash"],
+                affectedParts: ["Fruits", "Leaves", "Stems"],
+                symptoms: ["Cat-facing on fruit", "Sunken areas", "Discolored spots", "Stunted growth"],
+                prevention: ["Remove weeds", "Use row covers", "Handpick adults", "Plant trap crops"],
+                control: ["Knock into soapy water", "Apply insecticidal soap", "Use neem oil", "Encourage predators"],
+                link: "https://www.almanac.com/pest/stink-bugs"
+            },
+            {
+                name: "Sunscald",
+                type: "Abiotic",
+                plants: ["Peppers", "Tomatoes", "Fruit trees"],
+                affectedParts: ["Fruits", "Bark"],
+                symptoms: ["White or pale patches on fruit", "Soft, sunken areas", "Blistered bark", "Cracking"],
+                prevention: ["Provide afternoon shade", "Avoid excessive pruning", "Use whitewash on trunks", "Harvest promptly"],
+                control: ["Remove affected fruit", "Protect with shade cloth", "Wrap young tree trunks"],
+                link: "n/a"
+            },
+            {
+                name: "Thrips",
+                type: "Insect",
+                plants: ["Onions", "Garlic", "Iris", "Gladiolus", "Roses", "Peppers", "Tomatoes"],
+                affectedParts: ["Leaves", "Flowers", "Fruits"],
+                symptoms: ["Silvery streaks", "Deformed flowers", "Black specks (frass)", "Stunted growth"],
+                prevention: ["Use row covers", "Remove weeds", "Avoid over-fertilizing", "Monitor regularly"],
+                control: ["Spray with water", "Apply insecticidal soap", "Use neem oil", "Release predatory mites"],
+                link: "https://www.almanac.com/pest/thrips"
+            },
+            {
                 name: "Tomato Hornworms",
                 type: "Insect",
                 plants: ["Eggplants", "Peppers", "Potatoes", "Tomatoes"],
@@ -150,6 +580,46 @@
                 prevention: ["Use floating row covers early in season", "Rotate crops and avoid planting near previous nightshade beds", "Add native plants to attract beneficial insects", "Grow dill as a trap crop", "Plant basil or marigolds as repellents"],
                 control: ["Handpick hornworms (wear gloves)", "Leave parasitized larvae with white cocoons", "Spray Bacillus thuringiensis (Bt) on young caterpillars", "Prune heavily infested branches"],
                 link: "https://www.almanac.com/pest/tomato-hornworms"
+            },
+            {
+                name: "Verticillium Wilt",
+                type: "Disease (Fungal)",
+                plants: ["Tomatoes", "Potatoes", "Eggplants", "Peppers", "Strawberries", "Maple trees"],
+                affectedParts: ["Leaves", "Stems", "Roots"],
+                symptoms: ["V-shaped yellowing", "Wilting", "Brown streaks in stems", "Stunted growth"],
+                prevention: ["Plant resistant varieties", "Rotate crops", "Solarize soil", "Avoid susceptible plants"],
+                control: ["Remove infected plants", "Fumigate soil if severe", "Use resistant rootstocks"],
+                link: "https://www.almanac.com/pest/verticillium-wilt"
+            },
+            {
+                name: "Whiteflies",
+                type: "Insect",
+                plants: ["Tomatoes", "Cucumbers", "Peppers", "Poinsettias", "Cabbage", "Citrus"],
+                affectedParts: ["Leaves (undersides)"],
+                symptoms: ["Cloud of white insects when disturbed", "Yellowing leaves", "Sticky honeydew", "Sooty mold", "Stunted growth"],
+                prevention: ["Use row covers", "Remove weeds", "Monitor regularly", "Avoid over-fertilizing"],
+                control: ["Spray with water", "Apply insecticidal soap", "Use yellow sticky traps", "Release beneficial insects"],
+                link: "https://www.almanac.com/pest/whiteflies"
+            },
+            {
+                name: "White Mold",
+                type: "Disease (Fungal)",
+                plants: ["Beans", "Lettuce", "Peppers", "Potatoes", "Tomatoes"],
+                affectedParts: ["Stems", "Leaves", "Fruits"],
+                symptoms: ["White cottony growth", "Water-soaked lesions", "Wilting", "Sclerotia (black structures)"],
+                prevention: ["Space plants", "Improve airflow", "Avoid overhead watering", "Rotate crops"],
+                control: ["Remove infected plants", "Apply fungicides early", "Solarize soil"],
+                link: "n/a"
+            },
+            {
+                name: "Wireworms",
+                type: "Insect",
+                plants: ["Carrots", "Potatoes", "Corn", "Wheat", "Beans"],
+                affectedParts: ["Roots", "Tubers", "Seeds"],
+                symptoms: ["Tunnels in roots", "Wilting", "Poor germination", "Holes in tubers"],
+                prevention: ["Rotate crops", "Till soil", "Use bait traps", "Plant later in season"],
+                control: ["Apply beneficial nematodes", "Use insecticidal treatments", "Remove infested plants"],
+                link: "https://www.almanac.com/pest/wireworms"
             }
         ];
 
@@ -157,19 +627,20 @@
         function injectStyles() {
             const style = document.createElement('style');
             style.textContent = `
-                    #CalculatorContainer * {
-                        box-sizing: border-box;
-                        margin: 0;
-                        padding: 0;
-                        font-family: 'Georgia', serif; 
-                    }
-                    
+                #CalculatorContainer * {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding: 0;
+                    font-family: 'Georgia', serif; 
+                }
+                
                 #CalculatorContainer body {
-                        background-color: #fff;
-                        color: #333;
-                        line-height: 1.6;
-                        padding: 20px;
-                    }
+                    background-color: #fff;
+                    color: #333;
+                    line-height: 1.6;
+                    padding: 20px;
+                }
+                
                 #CalculatorContainer .container {
                     max-width: 1000px;
                     margin: 0 auto;
@@ -431,8 +902,33 @@
             `;
         }
 
-        // Extract all unique plants from pest data
+        // Extract all unique plants from pest data and remove duplicates
         const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
+        
+        // Function to normalize plant names (remove plural forms)
+        function normalizePlantName(plant) {
+            // Handle special cases first
+            if (plant === "Trees (e.g., Dogwood, Sycamore)") return "Trees";
+            if (plant === "Cabbage and other crucifers") return "Cabbage";
+            
+            // Remove trailing 's' for plural forms
+            if (plant.endsWith('s') && !plant.endsWith('ss') && plant !== "Beans" && plant !== "Peas") {
+                return plant.slice(0, -1);
+            }
+            return plant;
+        }
+        
+        // Create a mapping of normalized names to original names
+        const plantNameMap = {};
+        allPlants.forEach(plant => {
+            const normalized = normalizePlantName(plant);
+            if (!plantNameMap[normalized]) {
+                plantNameMap[normalized] = plant;
+            }
+        });
+        
+        // Get unique normalized plant names
+        const uniquePlants = Object.keys(plantNameMap).sort();
         
         // DOM elements
         let plantSelectEl, problemAreaStepEl, problemAreaSelectEl, symptomsStepEl, symptomsContainerEl, resultEl, pestInfoEl, pestLinkEl;
@@ -454,11 +950,11 @@
             pestInfoEl = document.getElementById('pest-info');
             pestLinkEl = document.getElementById('pest-link');
             
-            // Populate plant options
-            allPlants.forEach(plant => {
+            // Populate plant options with unique names
+            uniquePlants.forEach(plant => {
                 const option = document.createElement('option');
-                option.value = plant;
-                option.textContent = plant;
+                option.value = plantNameMap[plant]; // Store the original name as value
+                option.textContent = plant; // Display the normalized name
                 plantSelectEl.appendChild(option);
             });
             
@@ -519,14 +1015,11 @@
                 // Clear previous symptoms
                 symptomsContainerEl.innerHTML = '';
                 
-                // Get all symptoms from pests that affect the selected problem area
-                const allSymptoms = [...new Set(pestData
-                    .filter(pest => pest.affectedParts.includes(selectedProblemArea))
-                    .flatMap(pest => pest.symptoms)
-                )];
+                // Get all symptoms from pests that affect the selected plant AND problem area
+                const allSymptoms = [...new Set(filteredPests.flatMap(pest => pest.symptoms))];
                 
                 if (allSymptoms.length === 0) {
-                    symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this problem area.</div>';
+                    symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this combination.</div>';
                     return;
                 }
                 
@@ -582,7 +1075,7 @@
                 `;
                 
                 // Set pest link
-                if (pest.link) {
+                if (pest.link && pest.link !== "n/a") {
                     pestLinkEl.href = pest.link;
                     pestLinkEl.style.display = 'inline-block';
                 } else {
