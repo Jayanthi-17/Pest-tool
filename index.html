@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Pest Diagnostic Tool</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f5f0;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-top: 5px solid #ad2a24;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #ad2a24;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            color: #666;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f7f5;
+            border-radius: 8px;
+            border-left: 4px solid #ad2a24;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ad2a24;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: white;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #ad2a24;
+            box-shadow: 0 0 0 2px rgba(173, 42, 36, 0.2);
+        }
+        
+        .symptoms-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        
+        .symptom-option {
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        
+        .symptom-option:hover {
+            background: #f5f5f5;
+        }
+        
+        .symptom-option input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #ad2a24;
+        }
+        
+        .symptom-option label {
+            margin-bottom: 0;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fdf3f3;
+            border-radius: 8px;
+            border-left: 4px solid #ad2a24;
+            display: none;
+        }
+        
+        .result h3 {
+            margin-bottom: 15px;
+            color: #ad2a24;
+        }
+        
+        .pest-info {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+        
+        .pest-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ad2a24;
+            margin-bottom: 10px;
+        }
+        
+        .pest-type {
+            display: inline-block;
+            background: #f1c8c6;
+            color: #ad2a24;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .pest-detail {
+            margin-bottom: 8px;
+        }
+        
+        .pest-detail strong {
+            color: #555;
+        }
+        
+        .pest-link {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #ad2a24;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .pest-link:hover {
+            background: #8a1f1a;
+        }
+        
+        .reset-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        
+        .reset-btn:hover {
+            background: #555;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .step {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Plant Pest Diagnostic Tool</h1>
+            <p class="description">Identify pests and diseases affecting your plants by selecting your plant type, problem area, and symptoms</p>
+        </header>
+        
+        <div class="step">
+            <h2 class="step-title">Step 1: Select a Plant</h2>
+            <div class="form-group">
+                <label for="plant-select">Choose a plant:</label>
+                <select id="plant-select">
+                    <option value="">-- Select a plant --</option>
+                    <!-- Plant options will be populated by JavaScript -->
+                </select>
+            </div>
+        </div>
+        
+        <div class="step" id="problem-area-step" style="display: none;">
+            <h2 class="step-title">Step 2: Select Problem Area</h2>
+            <div class="form-group">
+                <label for="problem-area-select">Where is the problem located?</label>
+                <select id="problem-area-select">
+                    <option value="">-- Select problem area --</option>
+                    <!-- Problem area options will be populated by JavaScript -->
+                </select>
+            </div>
+        </div>
+        
+        <div class="step" id="symptoms-step" style="display: none;">
+            <h2 class="step-title">Step 3: Select Symptoms</h2>
+            <div class="symptoms-container" id="symptoms-container">
+                <!-- Symptoms will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="result" id="result">
+            <h3>Diagnosis Result</h3>
+            <div class="pest-info" id="pest-info">
+                <!-- Pest information will be populated by JavaScript -->
+            </div>
+            <a href="#" class="pest-link" id="pest-link" target="_blank">Learn More About This Pest</a>
+            <br>
+            <button class="reset-btn" onclick="resetTool()">Start Over</button>
+        </div>
+    </div>
+
+    <script>
+        // Pest data structure based on the updated Excel content
+        const pestData = [
+            {
+                name: "Anthracnose",
+                type: "Disease (Fungal)",
+                plants: ["Beans", "Cucumbers", "Melons", "Peppers", "Tomatoes", "Trees (e.g., Dogwood, Sycamore)", "Turfgrass"],
+                affectedParts: ["Leaves", "Stems", "Fruit/Vegetable"],
+                symptoms: ["Sunken dark lesions on leaves, stems, or fruits", "Pink or orange gelatinous ooze may appear in wet conditions", "Curled or distorted leaves", "Premature leaf drop", "Twig dieback", "Poor flowering"],
+                prevention: ["Avoid overhead watering", "Improve air circulation", "Rotate crops", "Plant resistant varieties"],
+                control: ["Prune infected areas", "Apply copper or sulfur-based fungicides early", "Destroy fallen debris"],
+                link: "https://www.almanac.com/pest/anthracnose"
+            },
+            {
+                name: "Aphids",
+                type: "Insect (Sap-sucking pest)",
+                plants: ["Beans", "Beets", "Cucumber", "Gladiolus", "Impatiens", "Lettuce", "Melon", "Petunia", "Phlox", "Pumpkin", "Rudbeckia", "Spinach", "Squash", "Tomato"],
+                affectedParts: ["Leaves", "Stems", "Buds", "Flowers", "Fruit/Vegetable"],
+                symptoms: ["Clusters of tiny green, black, or white insects", "Curled or distorted leaves", "Sticky honeydew on surfaces", "Presence of ants", "Sooty mold growth"],
+                prevention: ["Monitor regularly", "Avoid over-fertilizing", "Encourage beneficial insects", "Remove weeds nearby"],
+                control: ["Spray with insecticidal soap or horticultural oil", "Introduce ladybugs or lacewings", "Hose off with water"],
+                link: "https://www.almanac.com/pest/aphids"
+            },
+            {
+                name: "Blossom-End Rot",
+                type: "Disease (Physiological disorder due to calcium deficiency)",
+                plants: ["Tomatoes", "Eggplant", "Zucchini", "Bell Peppers"],
+                affectedParts: ["Fruit"],
+                symptoms: ["Dark, sunken lesion at the blossom end (bottom) of the fruit"],
+                prevention: ["Maintain consistent watering", "Avoid high nitrogen fertilizers", "Ensure soil pH is around 6.2–6.8", "Add calcium only if a deficiency is confirmed by soil test"],
+                control: ["Remove affected fruit", "Apply calcium sprays early in fruit development"],
+                link: "https://www.almanac.com/pest/blossom-end-rot"
+            },
+            {
+                name: "Cabbage Looper",
+                type: "Insect",
+                plants: ["Broccoli", "Cabbage", "Cauliflower", "Kale"],
+                affectedParts: ["Leaves"],
+                symptoms: ["Large, ragged holes", "Skeletonized areas", "Visible frass (insect droppings)"],
+                prevention: ["Remove plant debris", "Use row covers", "Encourage beneficial insects like parasitic wasps"],
+                control: ["Handpick larvae", "Apply Bacillus thuringiensis (Bt) or spinosad to leaves"],
+                link: "https://www.almanac.com/pest/how-get-rid-cabbage-loopers"
+            },
+            {
+                name: "Colorado Potato Beetles",
+                type: "Insect",
+                plants: ["Eggplant", "Potatoes", "Tomato", "Tomatillos"],
+                affectedParts: ["Leaves", "Stem"],
+                symptoms: ["Defoliation (loss of leaves)"],
+                prevention: ["Rotate crops", "Remove weeds and alternate host plants like ground cherry and nightshade", "Apply straw mulch", "Use row covers to exclude beetles"],
+                control: ["Handpick and drop in soapy water", "Lady beetles prey on eggs", "Apply Beauveria bassiana or spinosad to kill larvae and adults"],
+                link: "https://www.almanac.com/pest/colorado-potato-beetles"
+            },
+            {
+                name: "Tomato Cracking",
+                type: "Abiotic",
+                plants: ["Tomatoes"],
+                affectedParts: ["Fruit"],
+                symptoms: ["Fruit skin splits from the stem downward, or cracks form rings around the stem end"],
+                prevention: ["Regular, deep watering instead of letting it dry out completely", "Mulch with 2 to 3 inch layer of straw, shredded leaves, or compost", "Choose crack-resistant varieties", "Harvest promptly"],
+                control: ["Harvest early to prevent rot", "Still edible but use quickly", "If deeply cracked, toss and compost"],
+                link: "https://www.almanac.com/video/top-10-tomato-problems-and-solutions"
+            },
+            {
+                name: "Cucumber Beetles (Striped)",
+                type: "Insect",
+                plants: ["Beans", "Cantaloupe", "Corn", "Cucumbers", "Melons", "Squash", "Watermelon", "Zucchini"],
+                affectedParts: ["Leaves", "Stems", "Fruit/Vegetable"],
+                symptoms: ["Chewed leaves, wilted or stunted plants, scarred fruit"],
+                prevention: ["Remove debris and alternate host plants", "Mulch with thick straw", "Use row covers before flowering", "Monitor for bacterial wilt"],
+                control: ["Use floating row covers until flowering", "Handpick beetles", "Apply neem oil or pyrethrin if needed"],
+                link: "https://www.almanac.com/pest/cucumber-beetles"
+            },
+            {
+                name: "Cutworms",
+                type: "Insect (Larvae of moths)",
+                plants: ["Asparagus", "Beans", "Cabbage and other crucifers", "Carrots", "Celery", "Corn", "Lettuce", "Peas", "Peppers", "Potatoes", "Tomatoes"],
+                affectedParts: ["Stems", "Leaves", "Seedlings"],
+                symptoms: ["Seedlings cut at base", "Cut stems near soil line", "Curled larvae in soil"],
+                prevention: ["Wrap a 4-inch-wide collar made from cardboard/newspaper around each seedling stem", "Weed", "Remove plant debris", "Row covers"],
+                control: ["Hand-pick larvae at night", "Use cardboard collars around stems", "Sprinkle diatomaceous earth or crushed eggshells around base", "Apply biological insecticides like Spinosad or Bt if needed"],
+                link: "https://www.almanac.com/pest/cutworms"
+            },
+            {
+                name: "Early Blight",
+                type: "Disease",
+                plants: ["Eggplants", "Peppers", "Potatoes", "Tomatoes"],
+                affectedParts: ["Leaves", "Stems", "Fruits"],
+                symptoms: ["Brown leaf spots with concentric rings", "Yellow halos", "Lower leaves die first", "Stem lesions", "Fruit rot near stem end"],
+                prevention: ["Rotate crops", "Mulch to reduce soil splash", "Avoid overhead watering", "Plant tolerant varieties"],
+                control: ["Remove infected leaves", "Apply organic-approved fungicides like copper sprays early", "Prune for airflow"],
+                link: "https://www.almanac.com/pest/early-blight"
+            },
+            {
+                name: "Flea Beetles",
+                type: "Insect",
+                plants: ["Broccoli", "Cabbage", "Eggplant", "Kale", "Peppers", "Radishes", "Tomatoes", "Turnips"],
+                affectedParts: ["Leaves", "Stems", "Roots"],
+                symptoms: ["Wilting, stunting, tiny round 'shot' holes", "Tiny black beetles jump when disturbed"],
+                prevention: ["Mulch heavily", "Attract beneficial insects like braconid wasps", "Use row covers or fine screening during seedling stage", "Plant late", "Remove weeds and plant debris"],
+                control: ["Hand-vacuum adults off leaves", "Use white sticky traps", "Apply neem oil or insecticidal soap"],
+                link: "https://www.almanac.com/pest/flea-beetles"
+            },
+            {
+                name: "Late Blight",
+                type: "Disease (Fungal-like)",
+                plants: ["Potatoes", "Tomatoes", "Eggplants", "Peppers"],
+                affectedParts: ["Leaves", "Stems", "Fruits", "Tubers"],
+                symptoms: ["Water-soaked lesions on leaves", "Dark, greasy spots", "White fuzzy growth under leaves in humid conditions", "Fruit rot", "Tubers show firm brown decay"],
+                prevention: ["Plant earlier in year, select blight resistant varieties", "Use certified seed", "Destroy cull piles and volunteers", "Avoid overhead irrigation", "Monitor weather and apply fungicides preventively"],
+                control: ["Remove infected plants immediately", "Apply copper-based fungicides or biofungicides like Bacillus subtilis", "Avoid harvesting until vines are dead for 2–3 weeks"],
+                link: "https://www.almanac.com/pest/late-blight-disease-tomatoes-and-potatoes-plants"
+            },
+            {
+                name: "Mosaic Virus",
+                type: "Disease (Viral)",
+                plants: ["Beans", "Cucumbers", "Eggplants", "Lettuce", "Melons", "Peppers", "Potatoes", "Roses", "Squash", "Spinach", "Tomatoes"],
+                affectedParts: ["Leaves", "Stems", "Fruits", "Flowers", "Veins"],
+                symptoms: ["Mottled yellow/green/white patches", "Crinkled or wavy leaves", "Stunted growth", "Misshapen fruits", "Shoestring leaf syndrome", "Twisted young growth"],
+                prevention: ["Remove infected plants", "Control aphids with insecticidal soap or reflective mulches", "Sanitize tools between uses to prevent spread", "Use certified virus-free seeds and resistant varieties"],
+                control: ["There is no cure for Mosaic Virus", "Infected plants must be removed and destroyed to prevent spread"],
+                link: "https://www.almanac.com/pest/mosaic-viruses"
+            },
+            {
+                name: "Powdery Mildew",
+                type: "Disease (Fungal)",
+                plants: ["Beans", "Cucumbers", "Eggplants", "Grapes", "Lettuce", "Melons", "Peas", "Peppers", "Roses", "Squash", "Tomatoes", "Zinnias"],
+                affectedParts: ["Leaves (especially upper surface)", "Stems", "Buds", "Flowers", "Fruits"],
+                symptoms: ["White or gray powdery spots", "Leaf curling or distortion", "Yellowing leaves", "Premature leaf drop", "Reduced flowering or fruiting", "Stunted growth"],
+                prevention: ["Improve air circulation: Space plants properly and prune dense growth", "Choose sunny spots: Shade encourages mildew", "Use resistant varieties: Especially for squash, cucumbers, and roses", "Clean up debris: Remove infected leaves and fallen plant matter"],
+                control: ["Apply fungicides such as neem oil, sulfur, potassium bicarbonate, or horticultural oils", "DIY spray: Mix 1 tbsp baking soda + 1 tsp dish soap + 1 tbsp vegetable oil in 1 gallon water", "Prune infected parts and dispose of them—do not compost"],
+                link: "https://www.almanac.com/pest/powdery-mildew"
+            },
+            {
+                name: "Tomato Hornworms",
+                type: "Insect",
+                plants: ["Eggplants", "Peppers", "Potatoes", "Tomatoes"],
+                affectedParts: ["Leaves", "Stems", "Fruits", "Blossoms"],
+                symptoms: ["Chewed leaves", "Large green caterpillars", "Frass", "Defoliation", "Damaged tomatoes"],
+                prevention: ["Use floating row covers early in season", "Rotate crops and avoid planting near previous nightshade beds", "Add native plants to attract beneficial insects", "Grow dill as a trap crop", "Plant basil or marigolds as repellents"],
+                control: ["Handpick hornworms (wear gloves)", "Leave parasitized larvae with white cocoons", "Spray Bacillus thuringiensis (Bt) on young caterpillars", "Prune heavily infested branches"],
+                link: "https://www.almanac.com/pest/tomato-hornworms"
+            }
+        ];
+
+        // Extract all unique plants from pest data
+        const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
+        
+        // Extract all unique affected parts from pest data
+        const allAffectedParts = [...new Set(pestData.flatMap(pest => pest.affectedParts))].sort();
+        
+        // DOM elements
+        const plantSelectEl = document.getElementById('plant-select');
+        const problemAreaStepEl = document.getElementById('problem-area-step');
+        const problemAreaSelectEl = document.getElementById('problem-area-select');
+        const symptomsStepEl = document.getElementById('symptoms-step');
+        const symptomsContainerEl = document.getElementById('symptoms-container');
+        const resultEl = document.getElementById('result');
+        const pestInfoEl = document.getElementById('pest-info');
+        const pestLinkEl = document.getElementById('pest-link');
+        
+        // State variables
+        let selectedPlant = null;
+        let selectedProblemArea = null;
+        let filteredPests = [];
+        
+        // Initialize the tool
+        function initTool() {
+            // Populate plant options
+            allPlants.forEach(plant => {
+                const option = document.createElement('option');
+                option.value = plant;
+                option.textContent = plant;
+                plantSelectEl.appendChild(option);
+            });
+            
+            // Populate problem area options
+            allAffectedParts.forEach(part => {
+                const option = document.createElement('option');
+                option.value = part;
+                option.textContent = part;
+                problemAreaSelectEl.appendChild(option);
+            });
+            
+            // Add event listeners
+            plantSelectEl.addEventListener('change', handlePlantChange);
+            problemAreaSelectEl.addEventListener('change', handleProblemAreaChange);
+        }
+        
+        // Plant selection handler
+        function handlePlantChange() {
+            selectedPlant = plantSelectEl.value;
+            
+            if (selectedPlant) {
+                // Show problem area step
+                problemAreaStepEl.style.display = 'block';
+                
+                // Scroll to problem area step
+                problemAreaStepEl.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                problemAreaStepEl.style.display = 'none';
+                symptomsStepEl.style.display = 'none';
+                resultEl.style.display = 'none';
+            }
+        }
+        
+        // Problem area selection handler
+        function handleProblemAreaChange() {
+            selectedProblemArea = problemAreaSelectEl.value;
+            
+            if (selectedProblemArea) {
+                // Filter pests based on plant and problem area
+                filteredPests = pestData.filter(pest => {
+                    const hasPlant = pest.plants.includes(selectedPlant);
+                    const hasAffectedPart = pest.affectedParts.includes(selectedProblemArea);
+                    return hasPlant && hasAffectedPart;
+                });
+                
+                // Show symptoms step
+                symptomsStepEl.style.display = 'block';
+                
+                // Clear previous symptoms
+                symptomsContainerEl.innerHTML = '';
+                
+                // Get all symptoms from filtered pests
+                const allSymptoms = [...new Set(filteredPests.flatMap(pest => pest.symptoms))];
+                
+                // Create radio buttons for symptoms
+                allSymptoms.forEach(symptom => {
+                    const symptomOption = document.createElement('div');
+                    symptomOption.className = 'symptom-option';
+                    
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'symptom';
+                    radio.value = symptom;
+                    radio.id = `symptom-${symptom.replace(/\s+/g, '-').toLowerCase()}`;
+                    radio.addEventListener('change', () => handleSymptomChange(symptom));
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = radio.id;
+                    label.textContent = symptom;
+                    
+                    symptomOption.appendChild(radio);
+                    symptomOption.appendChild(label);
+                    symptomsContainerEl.appendChild(symptomOption);
+                });
+                
+                // Scroll to symptoms step
+                symptomsStepEl.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                symptomsStepEl.style.display = 'none';
+                resultEl.style.display = 'none';
+            }
+        }
+        
+        // Symptom selection handler
+        function handleSymptomChange(selectedSymptom) {
+            // Find pests that have this symptom
+            const matchingPests = filteredPests.filter(pest => 
+                pest.symptoms.includes(selectedSymptom)
+            );
+            
+            if (matchingPests.length > 0) {
+                // For simplicity, just show the first matching pest
+                const pest = matchingPests[0];
+                
+                // Display pest information
+                pestInfoEl.innerHTML = `
+                    <div class="pest-name">${pest.name}</div>
+                    <div class="pest-type">${pest.type}</div>
+                    <div class="pest-detail"><strong>Plants Affected:</strong> ${pest.plants.join(', ')}</div>
+                    <div class="pest-detail"><strong>Affected Parts:</strong> ${pest.affectedParts.join(', ')}</div>
+                    <div class="pest-detail"><strong>Symptoms:</strong> ${pest.symptoms.join('; ')}</div>
+                    ${pest.prevention ? `<div class="pest-detail"><strong>Prevention:</strong> ${Array.isArray(pest.prevention) ? pest.prevention.join('; ') : pest.prevention}</div>` : ''}
+                    ${pest.control ? `<div class="pest-detail"><strong>Control:</strong> ${Array.isArray(pest.control) ? pest.control.join('; ') : pest.control}</div>` : ''}
+                `;
+                
+                // Set pest link
+                if (pest.link) {
+                    pestLinkEl.href = pest.link;
+                    pestLinkEl.style.display = 'inline-block';
+                } else {
+                    pestLinkEl.style.display = 'none';
+                }
+                
+                // Show result
+                resultEl.style.display = 'block';
+                
+                // Scroll to result
+                resultEl.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                pestInfoEl.innerHTML = '<div class="no-results">No pests found matching your selection. Please try different symptoms.</div>';
+                pestLinkEl.style.display = 'none';
+                resultEl.style.display = 'block';
+            }
+        }
+        
+        // Reset the tool
+        function resetTool() {
+            selectedPlant = null;
+            selectedProblemArea = null;
+            filteredPests = [];
+            
+            // Reset UI
+            plantSelectEl.value = '';
+            problemAreaSelectEl.value = '';
+            symptomsContainerEl.innerHTML = '';
+            
+            // Uncheck any radio buttons
+            const radioButtons = document.querySelectorAll('input[name="symptom"]');
+            radioButtons.forEach(radio => radio.checked = false);
+            
+            problemAreaStepEl.style.display = 'none';
+            symptomsStepEl.style.display = 'none';
+            resultEl.style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Initialize the tool when page loads
+        window.onload = initTool;
+    </script>
+</body>
+</html>
