@@ -491,8 +491,16 @@
                 // Clear previous symptoms
                 symptomsContainerEl.innerHTML = '';
                 
-                // Get all symptoms from filtered pests
-                const allSymptoms = [...new Set(filteredPests.flatMap(pest => pest.symptoms))];
+                // Get all symptoms from pests that affect the selected problem area
+                const allSymptoms = [...new Set(pestData
+                    .filter(pest => pest.affectedParts.includes(selectedProblemArea))
+                    .flatMap(pest => pest.symptoms)
+                )];
+                
+                if (allSymptoms.length === 0) {
+                    symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this problem area.</div>';
+                    return;
+                }
                 
                 // Create radio buttons for symptoms
                 allSymptoms.forEach(symptom => {
@@ -525,7 +533,7 @@
         
         // Symptom selection handler
         function handleSymptomChange(selectedSymptom) {
-            // Find pests that have this symptom
+            // Find pests that have this symptom and match the selected plant and problem area
             const matchingPests = filteredPests.filter(pest => 
                 pest.symptoms.includes(selectedSymptom)
             );
