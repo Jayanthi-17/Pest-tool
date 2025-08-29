@@ -4,267 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Pest Diagnostic Tool</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family:'Georgia', serif; 
-        }
-        
-        body {
-            background-color: #fff;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #f9f5e8;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-           
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #ddd4d4;
-        }
-        
-        h1 {
-            color: #ad2a24;
-            margin-bottom: 10px;
-        }
-        
-        .description {
-            color: #666;
-            font-size: 16px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .step {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            
-        }
-        
-        .step-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #af6b35;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-        }
-        
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            background-color: white;
-            transition: border-color 0.3s;
-        }
-        
-        select:focus {
-            outline: none;
-            border-color: #dfebe0;
-            box-shadow: 0 0 0 2px rgba(220, 104, 89, 0.2);
-        }
-        
-        .symptoms-container {
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 10px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-        }
-        
-        .symptom-option {
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.2s;
-        }
-        
-        .symptom-option:hover {
-            background: #f5f5f5;
-        }
-        
-        .symptom-option input[type="radio"] {
-            margin-right: 10px;
-            accent-color: #4CAF50;
-        }
-        
-        .symptom-option label {
-            margin-bottom: 0;
-            cursor: pointer;
-            flex-grow: 1;
-        }
-        
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .result h3 {
-            margin-bottom: 15px;
-            color: #af6b35;
-        }
-        
-        .pest-info {
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            border: 1px solid #eee;
-        }
-        
-        .pest-name {
-            font-size: 20px;
-            font-weight: 600;
-            color: #ad2a24;
-            margin-bottom: 10px;
-        }
-        
-        .pest-type {
-            display: inline-block;
-            background: #f9f5e8;;
-            color: #ad2a24;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-        
-        .pest-detail {
-            margin-bottom: 8px;
-        }
-        
-        .pest-detail strong {
-            color: #555;
-        }
-        
-        .pest-link {
-            display: inline-block;
-            padding: 10px 15px;
-            background: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background 0.3s;
-            margin-top: 10px;
-        }
-        
-        .pest-link:hover {
-            background: #3d8b40;
-        }
-        
-        .reset-btn {
-            display: inline-block;
-            padding: 10px 15px;
-            background: #666;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-        
-        .reset-btn:hover {
-            background: #555;
-        }
-        
-        .no-results {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-style: italic;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .step {
-                padding: 15px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Plant Pest Diagnostic Tool</h1>
-            <p class="description">Identify pests and diseases affecting your plants by selecting your plant type, problem area, and symptoms</p>
-        </header>
-        
-        <div class="step">
-            <h2 class="step-title">Step 1: Select a Plant</h2>
-            <div class="form-group">
-                <label for="plant-select">Choose a plant:</label>
-                <select id="plant-select">
-                    <option value="">-- Select a plant --</option>
-                    <!-- Plant options will be populated by JavaScript -->
-                </select>
-            </div>
-        </div>
-        
-        <div class="step" id="problem-area-step" style="display: none;">
-            <h2 class="step-title">Step 2: Select Problem Area</h2>
-            <div class="form-group">
-                <label for="problem-area-select">Where is the problem located?</label>
-                <select id="problem-area-select">
-                    <option value="">-- Select problem area --</option>
-                    <!-- Problem area options will be populated by JavaScript -->
-                </select>
-            </div>
-        </div>
-        
-        <div class="step" id="symptoms-step" style="display: none;">
-            <h2 class="step-title">Step 3: Select Symptoms</h2>
-            <div class="symptoms-container" id="symptoms-container">
-                <!-- Symptoms will be populated by JavaScript -->
-            </div>
-        </div>
-        
-        <div class="result" id="result">
-            <h3>Diagnosis Result</h3>
-            <div class="pest-info" id="pest-info">
-                <!-- Pest information will be populated by JavaScript -->
-            </div>
-            <a href="#" class="pest-link" id="pest-link" target="_blank">Learn More About This Pest</a>
-            <br>
-            <button class="reset-btn" onclick="resetTool()">Start Over</button>
-        </div>
-    </div>
+    <div id="CalculatorContainer"></div>
 
     <script>
         // Pest data structure based on the updated Excel content
@@ -304,7 +46,7 @@
                 type: "Insect",
                 plants: ["Broccoli", "Cabbage", "Cauliflower", "Kale"],
                 affectedParts: ["Leaves"],
-                symptoms: ["Large, ragged holes", "Skeletonized areas", "Visible frass (insect droppings)"],
+                symptoms: ["Large, ragged holes", "Skeletonized areas", "Visible frass (inset droppings)"],
                 prevention: ["Remove plant debris", "Use row covers", "Encourage beneficial insects like parasitic wasps"],
                 control: ["Handpick larvae", "Apply Bacillus thuringiensis (Bt) or spinosad to leaves"],
                 link: "https://www.almanac.com/pest/how-get-rid-cabbage-loopers"
@@ -411,18 +153,289 @@
             }
         ];
 
+        // Function to create and inject the CSS
+        function injectStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                    #CalculatorContainer * {
+                        box-sizing: border-box;
+                        margin: 0;
+                        padding: 0;
+                        font-family: 'Georgia', serif; 
+                    }
+                    
+                #CalculatorContainer body {
+                        background-color: #fff;
+                        color: #333;
+                        line-height: 1.6;
+                        padding: 20px;
+                    }
+                #CalculatorContainer .container {
+                    max-width: 1000px;
+                    margin: 0 auto;
+                    background: #f9f5e8;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                    padding: 30px;
+                }
+                
+                #CalculatorContainer header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding-bottom: 20px;
+                    border-bottom: 2px solid #ddd4d4;
+                }
+                
+                #CalculatorContainer h1 {
+                    color: #ad2a24;
+                    margin-bottom: 10px;
+                }
+                
+                #CalculatorContainer .description {
+                    color: #666;
+                    font-size: 16px;
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+                
+                #CalculatorContainer .step {
+                    margin-bottom: 25px;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 8px;
+                }
+                
+                #CalculatorContainer .step-title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                    color: #af6b35;
+                }
+                
+                #CalculatorContainer .form-group {
+                    margin-bottom: 15px;
+                }
+                
+                #CalculatorContainer label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 500;
+                    color: #555;
+                }
+                
+                #CalculatorContainer select {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 16px;
+                    background-color: white;
+                    transition: border-color 0.3s;
+                }
+                
+                #CalculatorContainer select:focus {
+                    outline: none;
+                    border-color: #dfebe0;
+                    box-shadow: 0 0 0 2px rgba(220, 104, 89, 0.2);
+                }
+                
+                #CalculatorContainer .symptoms-container {
+                    max-height: 300px;
+                    overflow-y: auto;
+                    padding: 10px;
+                    background: white;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                }
+                
+                #CalculatorContainer .symptom-option {
+                    padding: 10px;
+                    border: 1px solid #eee;
+                    border-radius: 4px;
+                    margin-bottom: 8px;
+                    display: flex;
+                    align-items: center;
+                    transition: background-color 0.2s;
+                }
+                
+                #CalculatorContainer .symptom-option:hover {
+                    background: #f5f5f5;
+                }
+                
+                #CalculatorContainer .symptom-option input[type="radio"] {
+                    margin-right: 10px;
+                    accent-color: #4CAF50;
+                }
+                
+                #CalculatorContainer .symptom-option label {
+                    margin-bottom: 0;
+                    cursor: pointer;
+                    flex-grow: 1;
+                }
+                
+                #CalculatorContainer .result {
+                    margin-top: 30px;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 8px;
+                    display: none;
+                }
+                
+                #CalculatorContainer .result h3 {
+                    margin-bottom: 15px;
+                    color: #af6b35;
+                }
+                
+                #CalculatorContainer .pest-info {
+                    background: white;
+                    padding: 15px;
+                    border-radius: 6px;
+                    margin-bottom: 15px;
+                    border: 1px solid #eee;
+                }
+                
+                #CalculatorContainer .pest-name {
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: #ad2a24;
+                    margin-bottom: 10px;
+                }
+                
+                #CalculatorContainer .pest-type {
+                    display: inline-block;
+                    background: #f9f5e8;;
+                    color: #ad2a24;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    margin-bottom: 10px;
+                }
+                
+                #CalculatorContainer .pest-detail {
+                    margin-bottom: 8px;
+                }
+                
+                #CalculatorContainer .pest-detail strong {
+                    color: #555;
+                }
+                
+                #CalculatorContainer .pest-link {
+                    display: inline-block;
+                    padding: 10px 15px;
+                    background: #4CAF50;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 4px;
+                    transition: background 0.3s;
+                    margin-top: 10px;
+                }
+                
+                #CalculatorContainer .pest-link:hover {
+                    background: #3d8b40;
+                }
+                
+                #CalculatorContainer .reset-btn {
+                    display: inline-block;
+                    padding: 10px 15px;
+                    background: #666;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-top: 15px;
+                    transition: background 0.3s;
+                }
+                
+                #CalculatorContainer .reset-btn:hover {
+                    background: #555;
+                }
+                
+                #CalculatorContainer .no-results {
+                    text-align: center;
+                    padding: 20px;
+                    color: #666;
+                    font-style: italic;
+                }
+                
+                @media (max-width: 768px) {
+                    #CalculatorContainer .container {
+                        padding: 15px;
+                    }
+                    
+                    #CalculatorContainer .step {
+                        padding: 15px;
+                    }
+                    
+                    #CalculatorContainer select {
+                        font-size: 16px; /* Prevents zoom on iOS */
+                    }
+                    
+                    #CalculatorContainer .symptoms-container {
+                        max-height: 250px;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Function to create the HTML structure
+        function createHTMLStructure() {
+            const calculatorContainer = document.getElementById('CalculatorContainer');
+            
+            calculatorContainer.innerHTML = `
+                <div class="container">
+                    <header>
+                        <h1>Plant Pest Diagnostic Tool</h1>
+                        <p class="description">Identify pests and diseases affecting your plants by selecting your plant type, problem area, and symptoms</p>
+                    </header>
+                    
+                    <div class="step">
+                        <h2 class="step-title">Step 1: Select a Plant</h2>
+                        <div class="form-group">
+                            <label for="plant-select">Choose a plant:</label>
+                            <select id="plant-select">
+                                <option value="">-- Select a plant --</option>
+                                <!-- Plant options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="problem-area-step" style="display: none;">
+                        <h2 class="step-title">Step 2: Select Problem Area</h2>
+                        <div class="form-group">
+                            <label for="problem-area-select">Where is the problem located?</label>
+                            <select id="problem-area-select">
+                                <option value="">-- Select problem area --</option>
+                                <!-- Problem area options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="symptoms-step" style="display: none;">
+                        <h2 class="step-title">Step 3: Select Symptoms</h2>
+                        <div class="symptoms-container" id="symptoms-container">
+                            <!-- Symptoms will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="result" id="result">
+                        <h3>Diagnosis Result</h3>
+                        <div class="pest-info" id="pest-info">
+                            <!-- Pest information will be populated by JavaScript -->
+                        </div>
+                        <a href="#" class="pest-link" id="pest-link" target="_blank">Learn More About This Pest</a>
+                        <br>
+                        <button class="reset-btn" onclick="resetTool()">Start Over</button>
+                    </div>
+                </div>
+            `;
+        }
+
         // Extract all unique plants from pest data
         const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
         
         // DOM elements
-        const plantSelectEl = document.getElementById('plant-select');
-        const problemAreaStepEl = document.getElementById('problem-area-step');
-        const problemAreaSelectEl = document.getElementById('problem-area-select');
-        const symptomsStepEl = document.getElementById('symptoms-step');
-        const symptomsContainerEl = document.getElementById('symptoms-container');
-        const resultEl = document.getElementById('result');
-        const pestInfoEl = document.getElementById('pest-info');
-        const pestLinkEl = document.getElementById('pest-link');
+        let plantSelectEl, problemAreaStepEl, problemAreaSelectEl, symptomsStepEl, symptomsContainerEl, resultEl, pestInfoEl, pestLinkEl;
         
         // State variables
         let selectedPlant = null;
@@ -431,6 +444,16 @@
         
         // Initialize the tool
         function initTool() {
+            // Get DOM elements after creating the HTML
+            plantSelectEl = document.getElementById('plant-select');
+            problemAreaStepEl = document.getElementById('problem-area-step');
+            problemAreaSelectEl = document.getElementById('problem-area-select');
+            symptomsStepEl = document.getElementById('symptoms-step');
+            symptomsContainerEl = document.getElementById('symptoms-container');
+            resultEl = document.getElementById('result');
+            pestInfoEl = document.getElementById('pest-info');
+            pestLinkEl = document.getElementById('pest-link');
+            
             // Populate plant options
             allPlants.forEach(plant => {
                 const option = document.createElement('option');
@@ -602,7 +625,11 @@
         }
         
         // Initialize the tool when page loads
-        window.onload = initTool;
+        window.onload = function() {
+            injectStyles();
+            createHTMLStructure();
+            initTool();
+        };
     </script>
 </body>
 </html>
