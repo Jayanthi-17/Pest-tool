@@ -905,56 +905,84 @@
         // Extract all unique plants from pest data and remove duplicates
         const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
         
-        // Function to normalize plant names (remove plural forms)
         // Function to normalize plant names (remove plural forms and standardize)
-function normalizePlantName(plant) {
-    // Handle special cases first
-    if (plant === "Trees (e.g., Dogwood, Sycamore)") return "Tree";
-    if (plant === "Cabbage and other crucifers") return "Cabbage";
-    
-    // Handle Brussels Sprout variations
-    if (plant.toLowerCase().includes("brussel")) {
-        return "Brussels Sprout";
-    }
-    
-    // Common plural to singular conversions
-    const pluralToSingular = {
-        "tomatoes": "Tomato",
-        "trees": "Tree",
-        "sprouts": "Sprout",
-        "peppers": "Pepper",
-        "cucumbers": "Cucumber",
-        // Add more as needed
-    };
-    
-    const lowerPlant = plant.toLowerCase();
-    
-    // Check if it matches any known plural forms
-    for (const [plural, singular] of Object.entries(pluralToSingular)) {
-        if (lowerPlant === plural || lowerPlant.includes(plural)) {
-            return singular;
+        function normalizePlantName(plant) {
+            // Handle special cases first
+            if (plant === "Trees (e.g., Dogwood, Sycamore)") return "Tree";
+            if (plant === "Cabbage and other crucifers") return "Cabbage";
+            
+            // Handle Brussels Sprout variations
+            if (plant.toLowerCase().includes("brussel")) {
+                return "Brussels Sprout";
+            }
+            
+            // Common plural to singular conversions
+            const pluralToSingular = {
+                "tomatoes": "Tomato",
+                "trees": "Tree",
+                "sprouts": "Sprout",
+                "peppers": "Pepper",
+                "cucumbers": "Cucumber",
+                "melons": "Melon",
+                "squashes": "Squash",
+                "eggplants": "Eggplant",
+                "potatoes": "Potato",
+                "carrots": "Carrot",
+                "onions": "Onion",
+                "beans": "Bean",
+                "peas": "Pea",
+                "radishes": "Radish",
+                "turnips": "Turnip",
+                "cabbages": "Cabbage",
+                "broccolis": "Broccoli",
+                "cauliflowers": "Cauliflower",
+                "kales": "Kale",
+                "lettuces": "Lettuce",
+                "spinaches": "Spinach",
+                "zucchinis": "Zucchini",
+                "pumpkins": "Pumpkin",
+                "corns": "Corn",
+                "strawberries": "Strawberry",
+                "raspberries": "Raspberry",
+                "blueberries": "Blueberry",
+                "apples": "Apple",
+                "peaches": "Peach",
+                "cherries": "Cherry",
+                "plums": "Plum",
+                "grapes": "Grape",
+                // Add more as needed
+            };
+            
+            const lowerPlant = plant.toLowerCase();
+            
+            // Check if it matches any known plural forms
+            for (const [plural, singular] of Object.entries(pluralToSingular)) {
+                if (lowerPlant === plural || lowerPlant.includes(plural)) {
+                    return singular;
+                }
+            }
+            
+            // General rule: remove trailing 's' for plural forms
+            if (plant.endsWith('s') && 
+                !plant.endsWith('ss') && 
+                plant !== "Beans" && 
+                plant !== "Peas" &&
+                plant !== "Corn" &&
+                plant.length > 3) {
+                return plant.slice(0, -1);
+            }
+            
+            return plant;
         }
-    }
-    
-    // General rule: remove trailing 's' for plural forms
-    if (plant.endsWith('s') && 
-        !plant.endsWith('ss') && 
-        plant !== "Beans" && 
-        plant !== "Peas" &&
-        plant !== "Corn" &&
-        plant.length > 3) {
-        return plant.slice(0, -1);
-    }
-    
-    return plant;
-}
         
         // Create a mapping of normalized names to original names
         const plantNameMap = {};
         allPlants.forEach(plant => {
             const normalized = normalizePlantName(plant);
             if (!plantNameMap[normalized]) {
-                plantNameMap[normalized] = plant;
+                plantNameMap[normalized] = [plant];
+            } else {
+                plantNameMap[normalized].push(plant);
             }
         });
         
@@ -968,6 +996,58 @@ function normalizePlantName(plant) {
         let selectedPlant = null;
         let selectedProblemArea = null;
         let filteredPests = [];
+        
+        // Function to clean and standardize problem area names
+        function cleanProblemAreaName(part) {
+            if (!part) return part;
+            
+            // Remove any leading special characters or numbers
+            part = part.replace(/^[-○•\s\d.]+/, '').trim();
+            
+            // Remove parenthetical details but keep the main category
+            if (part.includes("(")) {
+                part = part.split('(')[0].trim();
+            }
+            
+            // Standardize common terms
+            const standardizationMap = {
+                "fruits": "Fruit",
+                "fruit/vegetable": "Fruit",
+                "leaves (especially upper surface)": "Leaves",
+                "leaves (undersides)": "Leaves",
+                "stems (occasionally)": "Stems",
+                "stems (spears)": "Stems",
+                "roots (especially crown and shoulder)": "Roots",
+                "roots (skin only)": "Roots",
+                "bulbs (in onions)": "Bulbs",
+                "fruit/vegetable (ears)": "Fruit",
+                "inflorescences": "Flowers",
+                "petioles": "Stems",
+                "crowns": "Stems",
+                "silks": "Flowers",
+                "seed heads": "Seeds",
+                "vascular tissue": "Stems",
+                "root tips": "Roots",
+                "lower stems": "Stems",
+                "leaf bases": "Leaves",
+                "pods": "Fruit",
+                "heads": "Leaves",
+                "growing tips": "Leaves",
+                "vines": "Stems",
+                "lower stalk": "Stems",
+                "seeds": "Seeds"
+            };
+            
+            const lowerPart = part.toLowerCase();
+            if (standardizationMap[lowerPart]) {
+                return standardizationMap[lowerPart];
+            }
+            
+            // Capitalize first letter of each word
+            return part.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        }
         
         // Initialize the tool
         function initTool() {
@@ -984,7 +1064,7 @@ function normalizePlantName(plant) {
             // Populate plant options with unique names
             uniquePlants.forEach(plant => {
                 const option = document.createElement('option');
-                option.value = plantNameMap[plant]; // Store the original name as value
+                option.value = plant; // Store the normalized name as value
                 option.textContent = plant; // Display the normalized name
                 plantSelectEl.appendChild(option);
             });
@@ -1006,10 +1086,22 @@ function normalizePlantName(plant) {
                 problemAreaSelectEl.innerHTML = '<option value="">-- Select problem area --</option>';
                 
                 // Get all affected parts for the selected plant
-                const affectedPartsForPlant = [...new Set(pestData
-                    .filter(pest => pest.plants.includes(selectedPlant))
+                let affectedPartsForPlant = [...new Set(pestData
+                    .filter(pest => {
+                        // Check if any of the plant names in the map match this pest's plants
+                        const plantVariations = plantNameMap[selectedPlant] || [selectedPlant];
+                        return plantVariations.some(variation => pest.plants.includes(variation));
+                    })
                     .flatMap(pest => pest.affectedParts)
                 )].sort();
+                
+                // Clean up and standardize problem area names
+                affectedPartsForPlant = affectedPartsForPlant
+                    .map(cleanProblemAreaName)
+                    .filter(part => part && part.length > 0); // Remove empty values
+                
+                // Remove duplicates after cleaning
+                affectedPartsForPlant = [...new Set(affectedPartsForPlant)].sort();
                 
                 // Populate problem area options
                 affectedPartsForPlant.forEach(part => {
@@ -1034,9 +1126,16 @@ function normalizePlantName(plant) {
             
             if (selectedProblemArea) {
                 // Filter pests based on plant and problem area
+                const plantVariations = plantNameMap[selectedPlant] || [selectedPlant];
                 filteredPests = pestData.filter(pest => {
-                    const hasPlant = pest.plants.includes(selectedPlant);
-                    const hasAffectedPart = pest.affectedParts.includes(selectedProblemArea);
+                    const hasPlant = plantVariations.some(variation => pest.plants.includes(variation));
+                    
+                    // Check if any of the pest's affected parts match the selected problem area
+                    // (after cleaning both)
+                    const hasAffectedPart = pest.affectedParts.some(part => 
+                        cleanProblemAreaName(part) === selectedProblemArea
+                    );
+                    
                     return hasPlant && hasAffectedPart;
                 });
                 
@@ -1056,19 +1155,22 @@ function normalizePlantName(plant) {
                 
                 // Create radio buttons for symptoms
                 allSymptoms.forEach(symptom => {
+                    // Clean up symptom text
+                    const cleanSymptom = symptom.replace(/^[-○•\s\d.]+/, '').trim();
+                    
                     const symptomOption = document.createElement('div');
                     symptomOption.className = 'symptom-option';
                     
                     const radio = document.createElement('input');
                     radio.type = 'radio';
                     radio.name = 'symptom';
-                    radio.value = symptom;
-                    radio.id = `symptom-${symptom.replace(/\s+/g, '-').toLowerCase()}`;
-                    radio.addEventListener('change', () => handleSymptomChange(symptom));
+                    radio.value = cleanSymptom;
+                    radio.id = `symptom-${cleanSymptom.replace(/\s+/g, '-').toLowerCase()}`;
+                    radio.addEventListener('change', () => handleSymptomChange(cleanSymptom));
                     
                     const label = document.createElement('label');
                     label.htmlFor = radio.id;
-                    label.textContent = symptom;
+                    label.textContent = cleanSymptom;
                     
                     symptomOption.appendChild(radio);
                     symptomOption.appendChild(label);
@@ -1086,8 +1188,15 @@ function normalizePlantName(plant) {
         // Symptom selection handler
         function handleSymptomChange(selectedSymptom) {
             // Find pests that have this symptom and match the selected plant and problem area
+            const plantVariations = plantNameMap[selectedPlant] || [selectedPlant];
             const matchingPests = filteredPests.filter(pest => 
-                pest.symptoms.includes(selectedSymptom)
+                pest.symptoms.some(symptom => 
+                    symptom.replace(/^[-○•\s\d.]+/, '').trim() === selectedSymptom
+                ) &&
+                plantVariations.some(variation => pest.plants.includes(variation)) &&
+                pest.affectedParts.some(part => 
+                    cleanProblemAreaName(part) === selectedProblemArea
+                )
             );
             
             if (matchingPests.length > 0) {
