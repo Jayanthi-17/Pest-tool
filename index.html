@@ -906,17 +906,48 @@
         const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
         
         // Function to normalize plant names (remove plural forms)
-        function normalizePlantName(plant) {
-            // Handle special cases first
-            if (plant === "Trees (e.g., Dogwood, Sycamore)") return "Trees";
-            if (plant === "Cabbage and other crucifers") return "Cabbage";
-            
-            // Remove trailing 's' for plural forms
-            if (plant.endsWith('s') && !plant.endsWith('ss') && plant !== "Beans" && plant !== "Peas") {
-                return plant.slice(0, -1);
-            }
-            return plant;
+        // Function to normalize plant names (remove plural forms and standardize)
+function normalizePlantName(plant) {
+    // Handle special cases first
+    if (plant === "Trees (e.g., Dogwood, Sycamore)") return "Tree";
+    if (plant === "Cabbage and other crucifers") return "Cabbage";
+    
+    // Handle Brussels Sprout variations
+    if (plant.toLowerCase().includes("brussel")) {
+        return "Brussels Sprout";
+    }
+    
+    // Common plural to singular conversions
+    const pluralToSingular = {
+        "tomatoes": "Tomato",
+        "trees": "Tree",
+        "sprouts": "Sprout",
+        "peppers": "Pepper",
+        "cucumbers": "Cucumber",
+        // Add more as needed
+    };
+    
+    const lowerPlant = plant.toLowerCase();
+    
+    // Check if it matches any known plural forms
+    for (const [plural, singular] of Object.entries(pluralToSingular)) {
+        if (lowerPlant === plural || lowerPlant.includes(plural)) {
+            return singular;
         }
+    }
+    
+    // General rule: remove trailing 's' for plural forms
+    if (plant.endsWith('s') && 
+        !plant.endsWith('ss') && 
+        plant !== "Beans" && 
+        plant !== "Peas" &&
+        plant !== "Corn" &&
+        plant.length > 3) {
+        return plant.slice(0, -1);
+    }
+    
+    return plant;
+}
         
         // Create a mapping of normalized names to original names
         const plantNameMap = {};
