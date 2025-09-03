@@ -1121,69 +1121,78 @@
         }
         
         // Problem area selection handler
-        function handleProblemAreaChange() {
-            selectedProblemArea = problemAreaSelectEl.value;
+        // Problem area selection handler
+function handleProblemAreaChange() {
+    selectedProblemArea = problemAreaSelectEl.value;
+    
+    if (selectedProblemArea) {
+        // Filter pests based on plant and problem area
+        const plantVariations = plantNameMap[selectedPlant] || [selectedPlant];
+        filteredPests = pestData.filter(pest => {
+            const hasPlant = plantVariations.some(variation => pest.plants.includes(variation));
             
-            if (selectedProblemArea) {
-                // Filter pests based on plant and problem area
-                const plantVariations = plantNameMap[selectedPlant] || [selectedPlant];
-                filteredPests = pestData.filter(pest => {
-                    const hasPlant = plantVariations.some(variation => pest.plants.includes(variation));
-                    
-                    // Check if any of the pest's affected parts match the selected problem area
-                    // (after cleaning both)
-                    const hasAffectedPart = pest.affectedParts.some(part => 
-                        cleanProblemAreaName(part) === selectedProblemArea
-                    );
-                    
-                    return hasPlant && hasAffectedPart;
-                });
-                
-                // Show symptoms step
-                symptomsStepEl.style.display = 'block';
-                
-                // Clear previous symptoms
-                symptomsContainerEl.innerHTML = '';
-                
-                // Get all symptoms from pests that affect the selected plant AND problem area
-                const allSymptoms = [...new Set(filteredPests.flatMap(pest => pest.symptoms))];
-                
-                if (allSymptoms.length === 0) {
-                    symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this combination.</div>';
-                    return;
-                }
-                
-                // Create radio buttons for symptoms
-                allSymptoms.forEach(symptom => {
-                    // Clean up symptom text
-                    const cleanSymptom = symptom.replace(/^[-○•\s\d.]+/, '').trim();
-                    
-                    const symptomOption = document.createElement('div');
-                    symptomOption.className = 'symptom-option';
-                    
-                    const radio = document.createElement('input');
-                    radio.type = 'radio';
-                    radio.name = 'symptom';
-                    radio.value = cleanSymptom;
-                    radio.id = `symptom-${cleanSymptom.replace(/\s+/g, '-').toLowerCase()}`;
-                    radio.addEventListener('change', () => handleSymptomChange(cleanSymptom));
-                    
-                    const label = document.createElement('label');
-                    label.htmlFor = radio.id;
-                    label.textContent = cleanSymptom;
-                    
-                    symptomOption.appendChild(radio);
-                    symptomOption.appendChild(label);
-                    symptomsContainerEl.appendChild(symptomOption);
-                });
-                
-                // Scroll to symptoms step
-                symptomsStepEl.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                symptomsStepEl.style.display = 'none';
-                resultEl.style.display = 'none';
-            }
+            // Check if any of the pest's affected parts match the selected problem area
+            // (after cleaning both)
+            const hasAffectedPart = pest.affectedParts.some(part => 
+                cleanProblemAreaName(part) === selectedProblemArea
+            );
+            
+            return hasPlant && hasAffectedPart;
+        });
+        
+        // Show symptoms step
+        symptomsStepEl.style.display = 'block';
+        
+        // Clear previous symptoms
+        symptomsContainerEl.innerHTML = '';
+        
+        // Get all symptoms from pests that affect the selected plant AND problem area
+        const allSymptoms = [...new Set(filteredPests.flatMap(pest => pest.symptoms))];
+        
+        if (allSymptoms.length === 0) {
+            symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this combination.</div>';
+            return;
         }
+        
+        // Sort symptoms alphabetically
+        allSymptoms.sort((a, b) => {
+            // Clean the symptom text for better sorting
+            const cleanA = a.replace(/^[-○•\s\d.]+/, '').trim().toLowerCase();
+            const cleanB = b.replace(/^[-○•\s\d.]+/, '').trim().toLowerCase();
+            return cleanA.localeCompare(cleanB);
+        });
+        
+        // Create radio buttons for symptoms
+        allSymptoms.forEach(symptom => {
+            // Clean up symptom text
+            const cleanSymptom = symptom.replace(/^[-○•\s\d.]+/, '').trim();
+            
+            const symptomOption = document.createElement('div');
+            symptomOption.className = 'symptom-option';
+            
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'symptom';
+            radio.value = cleanSymptom;
+            radio.id = `symptom-${cleanSymptom.replace(/\s+/g, '-').toLowerCase()}`;
+            radio.addEventListener('change', () => handleSymptomChange(cleanSymptom));
+            
+            const label = document.createElement('label');
+            label.htmlFor = radio.id;
+            label.textContent = cleanSymptom;
+            
+            symptomOption.appendChild(radio);
+            symptomOption.appendChild(label);
+            symptomsContainerEl.appendChild(symptomOption);
+        });
+        
+        // Scroll to symptoms step
+        symptomsStepEl.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        symptomsStepEl.style.display = 'none';
+        resultEl.style.display = 'none';
+    }
+}
         
         // Symptom selection handler
         function handleSymptomChange(selectedSymptom) {
