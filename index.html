@@ -11,7 +11,7 @@
     <script>
         // Pest data structure based on the Excel content
         const pestData = [
-            {
+             {
                 name: "Anthracnose",
                 type: "Disease (Fungal)",
                 plants: ["Beans", "Cucumbers", "Melons", "Peppers", "Tomatoes"],
@@ -894,18 +894,17 @@
 
         // Extract all unique plants from pest data
         const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
-        
+
         // DOM elements
         let plantSelectEl, problemAreaStepEl, problemAreaSelectEl, symptomsStepEl, symptomsContainerEl, resultEl, pestInfoEl, pestLinkEl;
-        
+
         // State variables
         let selectedPlant = null;
         let selectedProblemArea = null;
         let filteredPests = [];
-        
+
         // Initialize the tool
         function initTool() {
-            // Get DOM elements after creating the HTML
             plantSelectEl = document.getElementById('plant-select');
             problemAreaStepEl = document.getElementById('problem-area-step');
             problemAreaSelectEl = document.getElementById('problem-area-select');
@@ -914,126 +913,115 @@
             resultEl = document.getElementById('result');
             pestInfoEl = document.getElementById('pest-info');
             pestLinkEl = document.getElementById('pest-link');
-            
-            // Populate plant options
+
+            // Populate plant select options
             allPlants.forEach(plant => {
                 const option = document.createElement('option');
                 option.value = plant;
                 option.textContent = plant;
                 plantSelectEl.appendChild(option);
             });
-            
-            // Add event listeners
+
+            // Event listeners
             plantSelectEl.addEventListener('change', handlePlantChange);
             problemAreaSelectEl.addEventListener('change', handleProblemAreaChange);
         }
-        
-        // Plant selection handler
+
+        // Plant change handler
         function handlePlantChange() {
             selectedPlant = plantSelectEl.value;
-            
+
             if (selectedPlant) {
-                // Show problem area step
                 problemAreaStepEl.style.display = 'block';
-                
-                // Clear previous problem area options
                 problemAreaSelectEl.innerHTML = '<option value="">-- Select problem area --</option>';
-                
-                // Get all affected parts for the selected plant
+
                 let affectedPartsForPlant = [...new Set(pestData
                     .filter(pest => pest.plants.includes(selectedPlant))
-                    .flatMap(pest => pest.affectedParts)
-                )].sort();
-                
+                    .flatMap(pest => pest.affectedParts))].sort();
+
                 // Remove duplicates
                 affectedPartsForPlant = [...new Set(affectedPartsForPlant)].sort();
-                
-                // Populate problem area options
+
                 affectedPartsForPlant.forEach(part => {
                     const option = document.createElement('option');
                     option.value = part;
                     option.textContent = part;
                     problemAreaSelectEl.appendChild(option);
                 });
-                
-                // Scroll to problem area step
+
                 problemAreaStepEl.scrollIntoView({ behavior: 'smooth' });
+                symptomsStepEl.style.display = 'none';
+                resultEl.style.display = 'none';
+                symptomsContainerEl.innerHTML = '';
             } else {
                 problemAreaStepEl.style.display = 'none';
                 symptomsStepEl.style.display = 'none';
                 resultEl.style.display = 'none';
+                symptomsContainerEl.innerHTML = '';
             }
         }
-        
-        // Problem area selection handler
+
+        // Problem area change handler
         function handleProblemAreaChange() {
             selectedProblemArea = problemAreaSelectEl.value;
-            
+
             if (selectedProblemArea) {
-                // Filter pests based on plant and problem area
-                filteredPests = pestData.filter(pest => 
-                    pest.plants.includes(selectedPlant) && 
+                // Filter pests based on selected plant and problem area
+                filteredPests = pestData.filter(pest =>
+                    pest.plants.includes(selectedPlant) &&
                     pest.affectedParts.includes(selectedProblemArea)
                 );
-                
-                // Show symptoms step
+
                 symptomsStepEl.style.display = 'block';
-                
-                // Clear previous symptoms
                 symptomsContainerEl.innerHTML = '';
-                
-                // Get all symptoms from pests that affect the selected plant AND problem area
-                const allSymptoms = [...new Set(filteredPests.flatMap(pest => pest.symptoms))];
-                
-                if (allSymptoms.length === 0) {
+
+                if (filteredPests.length === 0) {
                     symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this combination.</div>';
                     return;
                 }
-                
-                // Sort symptoms alphabetically
+
+                // Combine all symptoms from filtered pests and deduplicate
+                const allSymptoms = [...new Set(filteredPests.flatMap(pest => pest.symptoms))];
                 allSymptoms.sort();
-                
-                // Create radio buttons for symptoms
+
                 allSymptoms.forEach(symptom => {
                     const symptomOption = document.createElement('div');
                     symptomOption.className = 'symptom-option';
-                    
+
                     const radio = document.createElement('input');
                     radio.type = 'radio';
                     radio.name = 'symptom';
                     radio.value = symptom;
                     radio.id = `symptom-${symptom.replace(/\s+/g, '-').toLowerCase()}`;
                     radio.addEventListener('change', () => handleSymptomChange(symptom));
-                    
+
                     const label = document.createElement('label');
                     label.htmlFor = radio.id;
                     label.textContent = symptom;
-                    
+
                     symptomOption.appendChild(radio);
                     symptomOption.appendChild(label);
                     symptomsContainerEl.appendChild(symptomOption);
                 });
-                
-                // Scroll to symptoms step
+
                 symptomsStepEl.scrollIntoView({ behavior: 'smooth' });
+                resultEl.style.display = 'none';
+                pestInfoEl.innerHTML = '';
+                pestLinkEl.style.display = 'none';
             } else {
                 symptomsStepEl.style.display = 'none';
                 resultEl.style.display = 'none';
+                symptomsContainerEl.innerHTML = '';
             }
         }
-        
-        // Symptom selection handler
+
+        // Symptom change handler - find pest(s) for selected symptom and show first pest info
         function handleSymptomChange(selectedSymptom) {
-            // Find pests that have this symptom and match the selected plant and problem area
-            const matchingPests = filteredPests.filter(pest => 
-                pest.symptoms.includes(selectedSymptom)
-            );
-            
+            const matchingPests = filteredPests.filter(pest => pest.symptoms.includes(selectedSymptom));
+
             if (matchingPests.length > 0) {
-                // For simplicity, just show the first matching pest
-                const pest = matchingPests[0];
-                
-                // Display pest information
+                const pest = matchingPests[0]; // Show first matched pest
+
                 pestInfoEl.innerHTML = `
                     <div class="pest-name">${pest.name}</div>
                     <div class="pest-type">${pest.type}</div>
@@ -1043,19 +1031,15 @@
                     ${pest.prevention ? `<div class="pest-detail"><strong>Prevention:</strong> ${Array.isArray(pest.prevention) ? pest.prevention.join('; ') : pest.prevention}</div>` : ''}
                     ${pest.control ? `<div class="pest-detail"><strong>Control:</strong> ${Array.isArray(pest.control) ? pest.control.join('; ') : pest.control}</div>` : ''}
                 `;
-                
-                // Set pest link
+
                 if (pest.link && pest.link !== "n/a") {
                     pestLinkEl.href = pest.link;
                     pestLinkEl.style.display = 'inline-block';
                 } else {
                     pestLinkEl.style.display = 'none';
                 }
-                
-                // Show result
+
                 resultEl.style.display = 'block';
-                
-                // Scroll to result
                 resultEl.scrollIntoView({ behavior: 'smooth' });
             } else {
                 pestInfoEl.innerHTML = '<div class="no-results">No pests found matching your selection. Please try different symptoms.</div>';
@@ -1063,32 +1047,29 @@
                 resultEl.style.display = 'block';
             }
         }
-        
-        // Reset the tool
+
+        // Reset tool state and UI
         function resetTool() {
             selectedPlant = null;
             selectedProblemArea = null;
             filteredPests = [];
-            
-            // Reset UI
+
             plantSelectEl.value = '';
             problemAreaSelectEl.value = '';
             symptomsContainerEl.innerHTML = '';
-            
-            // Uncheck any radio buttons
-            const radioButtons = document.querySelectorAll('input[name="symptom"]');
-            radioButtons.forEach(radio => radio.checked = false);
-            
+
+            const radios = document.querySelectorAll('input[name="symptom"]');
+            radios.forEach(radio => radio.checked = false);
+
             problemAreaStepEl.style.display = 'none';
             symptomsStepEl.style.display = 'none';
             resultEl.style.display = 'none';
-            
-            // Scroll to top
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
-        // Initialize the tool when page loads
-        window.onload = function() {
+
+        // On window load initialize everything
+        window.onload = function () {
             injectStyles();
             createHTMLStructure();
             initTool();
