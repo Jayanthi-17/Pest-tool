@@ -1341,6 +1341,9 @@
                     return;
                 }
 
+                // Sort symptoms alphabetically by description
+                allSymptoms.sort((a, b) => a.description.localeCompare(b.description));
+
                 // Display symptoms
                 allSymptoms.forEach(symptom => {
                     const symptomOption = document.createElement('div');

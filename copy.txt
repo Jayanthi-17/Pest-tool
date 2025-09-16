@@ -1,5 +1,0 @@
-{part:"Leaves" , description:""},
-{part:"Stems" , description:""},
-{part:"Fruit" , description:""},
-{part:"Flower" , description:""},
-{part:"Buds" , description:""},
