@@ -168,8 +168,8 @@
                 {part:"Leaves" , description:"Wilting leaves"},
                 {part:"Leaves" , description:"Stunted growth"},
                 {part:"Stems" , description:"Weak or spindly growth"},
-                {part:"Roots" , description:"Darkened or decayed roots"},
-                {part:"Roots" , description:"Stunted roots"},
+                {part:"Roots" , description:"Handpick bugs and egg masses"},
+                {part:"Roots" , description:"Remove heavily infested leaves"},
                 {part:"Roots" , description:"Tunnels in roots"},
                 {part:"Roots" , description:"Small maggots feeding inside roots"}
                 ],
@@ -226,7 +226,7 @@
             {
                 name: "Corn Earworms",
                 type: "Insect",
-                plants: ["Beans", "Corn", "Cotton", "Peppers", "Sorghums", "Tomatoes"],
+                plants: ["Beans", "Corn", "Peppers", "Tomatoes"],
                 affectedParts: ["Leaves", "Fruit", "Buds"],
                 symptoms: [
                 {part:"Leaves" , description:"Ragged feeding on young leaves"},
@@ -365,10 +365,13 @@
                 plants: ["Basil", "Corn", "Dahlias", "Lettuce", "Marigolds", "Spinach", "Strawberries", "Tomatoes"],
                 affectedParts: ["Leaves", "Flowers", "Fruit"],
                 symptoms: [
-                {part:"Leaves" , description:"Small holes, ragged edges"},
+                {part:"Leaves" , description:"Ragged edges"},
+                {part:"Leaves" , description:"holes in leaves"},
+                {part:"Leaves" , description:"Chewed patches"},
                 {part:"Fruits" , description:"Surface blemishes, small holes"},
-                {part:"Flowers" , description:"Damaged petals, chewed flower parts"},
-                {part:"Leaves" , description:"Chewed patches"}
+                {part:"Fruits" , description:"Partially eaten fruit"},
+                {part:"Flowers" , description:" Chewed petals"},
+                {part:"Flowers" , description:"Damaged blossoms"},
                 ],
                 prevention: ["Remove plant debris", "Reduce moisture", "Trim vegetation", "Avoid overwatering", "Seal cracks and crevices", "Encourage natural predators like birds and frogs"],
                 control: ["Trap in tuna can filled with ½ inch of fish oil, sunk in soil with rim slightly above ground", "Rolled damp newspaper traps", "Apply diatomaceous earth around plants"],
@@ -391,14 +394,15 @@
             {
                 name: "Fire Blight",
                 type: "Disease (Bacterial)",
-                plants: ["Apples", "Crabapples", "Hawthorns", "Pears", "Quinces", "Roses"],
+                plants: ["Apples", "Crabapples", "Hawthorns", "Pears", "Roses"],
                 affectedParts: ["Leaves", "Stems", "Fruit", "Flowers"],
                 symptoms: [
                 {part:"Leaves" , description:"Blackened leaves, scorched appearance"},
                 {part:"Stems" , description:"Darkened or sunken canckers"},
                 {part:"Stems" , description:"Dieback of shoots"},
-                {part:"Fruits" , description:"Shriveled, blackened fruit"},
-                {part:"Flowers" , description:"Blossoms turn brown or black, wilt"}
+                {part:"Fruits" , description:"Brown or black spots,Shriveled fruit"},
+                {part:"Flowers" , description:"Blossoms turn brown or black"},
+                {part:"Flowers" , description:"Flowers may wilt or drop"}
                 ],
                 prevention: ["Plant resistant varieties", "Avoid high nitrogen", "Prune only in dry weather", "Sanitize tools"],
                 control: ["Prune 8–12 inches below infection during dormancy", "Sanitation is critical", "Sterilize tools between cuts", "Apply copper sprays during bloom"],
@@ -410,7 +414,9 @@
                 plants: ["Broccoli", "Cabbages", "Eggplants", "Kale", "Peppers", "Radishes", "Tomatoes", "Turnips"],
                 affectedParts: ["Leaves", "Stems"],
                 symptoms: [
-                {part:"Leaves" , description:"Small round holes (shot holes), stippling"}
+                {part:"Leaves" , description:"Tiny holes or 'shotgun' pattern of holes"},
+                {part:"Leaves" , description:"Yellowing or stippling"},
+                {part:"Leaves" , description:"Curling or distortion of young leaves"}
                 ],
                 prevention: ["Mulch heavily", "Attract beneficial insects like braconid wasps", "Use row covers or fine screening during seedling stage", "Plant late", "Remove weeds and plant debris"],
                 control: ["Hand-vacuum adults off leaves", "Use white sticky traps", "Apply neem oil or insecticidal soap"],
@@ -419,14 +425,16 @@
             {
                 name: "Fungus Gnats",
                 type: "Insect",
-                plants: ["Houseplants", "Ornamentals", "Potted Herbs", "Seedlings"],
+                plants: ["African Violets","Begonias","Lettuce","Orchids","Peppers", "Tomatoes"],
                 affectedParts: ["Leaves", "Roots"],
                 symptoms: [
                 {part:"Leaves" , description:"Yellowing leaves"},
                 {part:"Leaves" , description:"Wilting"},
                 {part:"Leaves" , description:"Stunted growth"},
                 {part:"Stems" , description:"Weak or spindly growth"},
-                {part:"Roots" , description:"Root damage, decay"}
+                {part:"Roots" , description:"Small larvae feeding on roots"},
+                {part:"Roots" , description:"Stunted or damaged roots"},
+                {part:"Roots" , description:"Rotting root tips"}
                 ],
                 prevention: ["Let soil dry between watering", "Avoid overwatering", "Use sterile potting mix", "Remove decaying organic matter"],
                 control: ["Destroy severely infested plants (DNC)", "Apply Bacillus thuringiensis israelensis (BTi) or beneficial nematodes", "Reduce watering"],
@@ -440,7 +448,9 @@
                 symptoms: [
                 {part:"Leaves" , description:"Yellowing leaves, often one-sided"},
                 {part:"Leaves" , description:"Wilting leaves, especially during heat"},
+                {part:"Stems" , description:"Sunted growth"},
                 {part:"Stems" , description:"Brown discoloration inside stems"},
+                {part:"Stems" , description:"Wilting"},
                 {part:"Roots" , description:"Rotted or discolored roots"},
                 {part:"Roots" , description:"stunted root system"}
                 ],
@@ -454,12 +464,13 @@
                 plants: ["Beans", "Geraniums", "Lettuce", "Peonies", "Roses", "Strawberries", "Tomatoes"],
                 affectedParts: ["Leaves", "Stems", "Fruit", "Flowers"],
                 symptoms: [
-                {part:"Leaves" , description:"Gray fuzzy growth on leaves"},
+                {part:"Leaves" , description:"Brown or gray spots, Fuzzy gray mold"},
                 {part:"Leaves" , description:"Wilting dying tissue"},
-                {part:"Stems" , description:"Gray fuzzy growth on stems, cankers"},
+                {part:"Stems" , description:"Soft softs, Water-soaked lesions"},
+                {part:"Stems" , description:"Gray mold on damaged areas"},
                 {part:"Stems" , description:"dieback of shoots"},
-                {part:"Fruits" , description:"Gray fuzzy growth on fruit, rot"},
-                {part:"Flowers" , description: "Gray fuzzy growth on flowers, blight"}
+                {part:"Fruits" , description:"Gray moldy spots, soft rot, sometimes shriveling or collapse"},
+                {part:"Flowers" , description: "Gray fuzzy mold on petals "}
                 ],
                 prevention: ["Avoid overhead watering", "Increase spacing and airflow", "Remove spent flowers and debris", "Irrigate early in the day"],
                 control: ["Remove infected tissue", "Apply copper-based fungicides or biofungicides like Bacillus subtilis early", "Refrigerate harvested produce properly"],
@@ -471,11 +482,11 @@
                 plants: ["Beans", "Carrots", "Lettuce", "Peas", "Squashes", "Tomatoes"],
                 affectedParts: ["Leaves", "Stems", "Fruit", "Roots"],
                 symptoms: [
-                {part:"Leaves" , description: "Eaten or missing leaves"},
-                {part:"Stems" , description:"Chewed or broken stems"},
-                {part:"Fruits" , description: "Partially eaten fruit"},
+                {part:"Leaves" , description: "Torn and Eaten leaves, Ragged edges"},
+                {part:"Stems" , description:"Gnawed stems, Broken stems"},
+                {part:"Fruits" , description: "Large bites from fruit"},
                 {part:"Buds" , description: "Nipped or eaten buds"},
-                {part:"Roots" , description: "Chewed or dug-up roots"}
+                {part:"Roots" , description: "Uprooted seedlings or plants from digging"}
                 ],
                 prevention: ["Fence garden with 4-ft wire buried 12 inches", "Add electric wire at top", "Remove nearby brush piles and burrow sites"],
                 control: ["Use live traps with fruit bait", "Install buried fencing with L-shaped barrier"],
@@ -484,11 +495,11 @@
             {
                 name: "Halo Blight",
                 type: "Disease (Bacterial)",
-                plants: ["Beans (Snap, Dry, Lima)"],
+                plants: ["Lima Beans","Snap Beans", "Dry Beans"],
                 affectedParts: ["Leaves", "Stems", "Pods"],
                 symptoms: [
-                {part:"Leaves" , description: "Small water-soaked leaf spots with yellow halos"},
-                {part:"Stems" , description:"Lesions on stems"},
+                {part:"Leaves" , description: "Water-soaked spots with yellow halos, Yellowing leaves, Wilting"},
+                {part:"Stems" , description:"Dark Lesions"},
                 {part:"Stems" , description:"dieback of shoots"},
                 {part:"Fruits" , description: "Small dark spots or lesions on pods"},
                 {part:"Fruits" , description:"Misshapen fruit"}
@@ -500,12 +511,13 @@
             {
                 name: "Japanese Beetles",
                 type: "Insect",
-                plants: ["Apples", "Beans", "Cherries", "Corn", "Grapes", "Linden Trees", "Peaches", "Plums", "Raspberries", "Roses"],
+                plants: ["Apples", "Beans", "Cherries", "Corn", "Grapes", "Peaches", "Plums", "Raspberries", "Roses"],
                 affectedParts: ["Leaves", "Flowers", "Fruit"],
                 symptoms: [
                 {part:"Leaves" , description:"Skeletonized leaves (eaten between veins)"},
-                {part:"Fruits" , description: "Surface feeding, scarring"},
-                {part:"Flowers" , description:  "Damaged petals, chewed flower parts"}
+                {part:"Leaves" , description:"Shiny metallic green beetles ~½ inch long"},
+                {part:"Fruits" , description: "Small feeding holes, Surface blemishes"},
+                {part:"Flowers" , description:  "Chewed petals, Damaged blossoms"}
                 ],
                 prevention: ["Cover plants after fruit set", "Avoid planting beetle-attracting species in problem areas", "Maintain healthy plants", "Delay lawn watering during peak egg-laying season", "Plant resistant varieties"],
                 control: ["Start early, handpicking beetles", "Apply neem oil or insecticidal soap early while populations are small", "Apply milky spore or beneficial nematodes to soil"],
@@ -517,14 +529,14 @@
                 plants: ["Eggplants", "Peppers", "Potatoes", "Tomatoes"],
                 affectedParts: ["Leaves", "Stems", "Fruit"],
                 symptoms: [
-                {part:"Leaves" , description:"Water-soaked lesions on leaves"},
-                {part:"Leaves" , description:"Dark, greasy spots"},
-                {part:"Leaves" , description:"Water-soaked lesions on leaves"},
-                {part:"Leaves" , description: "White fuzzy growth under leaves in humid conditions"},
+                {part:"Leaves" , description:"Dark Water-soaked spots"},
+                {part:"Leaves" , description:"Yellowing around spots"},
+                {part:"Leaves" , description:" Fuzzy gray or white growth under wet conditions"},
+                {part:"Leaves" , description: "Leaf collapse"},
                 {part:"Stems" , description:  "Dark lessions on stems"},
                 {part:"Stems" , description:"dieback of shoots"},
-                {part:"Fruits" , description:"Fuzzy mold"},
-                {part:"Fruits" , description:"Fruit rot"}
+                {part:"Fruits" , description:"Brown or black spots, Soft or sunken areas,"},
+                {part:"Fruits" , description:"Fuzzy mold"}
                 ],
                 prevention: ["Plant earlier in year, select blight resistant varieties", "Use certified seed", "Destroy cull piles and volunteers", "Avoid overhead irrigation", "Monitor weather and apply fungicides preventively"],
                 control: ["Remove infected plants immediately", "Apply copper-based fungicides or biofungicides like Bacillus subtilis", "Avoid harvesting until vines are dead for 2–3 weeks"],
@@ -533,12 +545,13 @@
             {
                 name: "Leaf Hoppers",
                 type: "Insect",
-                plants: ["Apples", "Beans", "Carrots", "Celery", "Dahlias", "Eggplants", "Grapes", "Lettuce", "Ornamentals", "Peas", "Potatoes", "Roses", "Strawberries"],
+                plants: ["Apples", "Beans", "Carrots", "Celery", "Dahlias", "Eggplants", "Grapes", "Lettuce", "Peas", "Potatoes", "Roses", "Strawberries"],
                 affectedParts: ["Leaves","Stems"],
                 symptoms: [
-                {part:"Leaves" , description: "Stippling (tiny white or yellow dots)"},
-                {part:"Leaves" , description: "Curling or cupping"},
-                {part:"Stems" , description:  "Weaking from feeding"}
+                {part:"Leaves" , description: "White or yellow speckling"},
+                {part:"Leaves" , description: "Curling leaves"},
+                {part:"Leaves" , description: "Stunted growth"},
+                {part:"Stems" , description:  "Weakening from feeding"}
                 ],
                 prevention: ["Use row covers early in season", "Rotate crops", "Attract beneficial insects (ladybugs, lacewings)", "Avoid over-fertilizing", "Maintain garden hygiene"],
                 control: ["Knock nymphs off with strong water spray", "Spray insecticidal soap or pyrethrin", "Release beneficial insects", "Remove infested leaves", "Apply kaolin clay as a deterrent"],
@@ -547,12 +560,12 @@
             {
                 name: "Leaf Miners",
                 type: "Insect",
-                plants: ["Beans", "Beets", "Celery", "Chards", "Citruses", "Cucumbers", "Lettuce", "Ornamentals", "Peas", "Spinach", "Tomatoes"],
+                plants: ["Beans", "Beets", "Celery", "Chards", "Cucumbers", "Lemons","Lettuce", "Limes", "Peas", "Spinach", "Tomatoes","Oranges"],
                 affectedParts: ["Leaves"],
                 symptoms: [
-                {part:"Leaves" , description: "Squiggly or serpentine trails (mines)"},
-                {part:"Leaves" , description: "Blotchy patches (blotch mines)"},
-                {part:"Leaves" , description: "Premature leaf drop"}
+                {part:"Leaves" , description: "White or pale winding trails"},
+                {part:"Leaves" , description: "Blotchy patches"},
+                {part:"Leaves" , description: "Curling or distorted leaves"}
                 ],
                 prevention: ["Use row covers early", "Remove and destroy infested leaves", "Avoid over-fertilizing", "Plant trap crops nearby"],
                 control: ["Prune damaged foliage", "Apply neem oil", "Release parasitic wasps"],
@@ -561,13 +574,12 @@
             {
                 name: "Leaf Spot",
                 type: "Disease (Fungal or bacterial)",
-                plants: ["Beans", "Corn", "Cucumbers", "Lettuce", "Peppers", "Roses", "Shrubs", "Tomatoes", "Trees"],
+                plants: ["Beans", "Corn", "Cucumbers", "Lettuce", "Peppers", "Roses", "Tomatoes"],
                 affectedParts: ["Leaves"],
                 symptoms: [
-                {part:"Leaves" , description: "Circular or angular spots"},
-                {part:"Leaves" , description: "Spots may have dark margins or halos"},
-                {part:"Leaves" , description: "Premature leaf drop"},
-                {part:"Stems" , description:  "Dark or sunken spots in severe case"}
+                {part:"Leaves" , description: "Dark or tan spots with yellow halos"},
+                {part:"Leaves" , description: " Premature leaf drop"},
+                {part:"Stems" , description:  "Dark or sunken spots in severe cases"}
                 ],
                 prevention: ["Rotate crops", "Avoid overhead watering", "Mulch properly", "Space plants well", "Plant resistant varieties"],
                 control: ["Remove fallen leaves and plant debris", "Apply copper-based fungicides early", "Prune for airflow"],
@@ -579,8 +591,8 @@
                 plants: ["Lima Beans", "Snap beans", "Soybeans"],
                 affectedParts: ["Leaves","Fruit"],
                 symptoms: [
-                {part:"Leaves" , description: "Skeletonized leaves (lacy appearance)"},
-                {part:"Leaves" , description: "Yellow or bronze discoloration"},
+                {part:"Leaves" , description: "Skeletonized leaves"},
+                {part:"Leaves" , description: "Yellowing leaves"},
                 {part:"Fruits" , description: "Scarring or feeding on bean pods"}
                 ],
                 prevention: ["Row covers after planting (through harvest)", "Crush egg masses by hand", "Spray Neem"],
@@ -590,11 +602,11 @@
             {
                 name: "Mice",
                 type: "Animal",
-                plants: ["Bulbs", "Fruit trees", "Houseplants", "Ornamentals", "Vegetables"],
+                plants: ["Apples", "Beans", "Beets", "Cabbages", "Corn", "Daffodils", "Garlic", "Grapes", "Hyacinths", "Kale","Lettuce", "Lilies", "Onions"," Peas", "Potatoes", "Roses", "Shallots", "Spinach", "Squashes", "Strawberries","Tomatoes"," Tulips"],
                 affectedParts: ["Fruit", "Stems", "Roots"],
                 symptoms: [
-                {part:"Stems" , description:  "Gnawed bark at base of trees or shrubs"},
-                {part:"Fruits" , description:  "Ocassionally "},
+                {part:"Stems" , description:  "Gnawed seedlings often near soil line"},
+                {part:"Fruits" , description:  "Ocassionally nibbled fruit "},
                 {part:"Roots" , description:  "Burrowed bulbs and young roots"},
                 {part:"Roots" , description:  "Stunted or Damaged seedlings"}
                 ],
@@ -605,11 +617,11 @@
             {
                 name: "Moles",
                 type: "Animal",
-                plants: ["Bulbs", "Lawns", "Root crops", "Seedlings"],
+                plants: ["Carrots", "Daffodils", "Garlic", "Beets", "Lettuce", "Lilies", "Onions", "Potatoes", "Radishes", "Tulips"],
                 affectedParts: ["Roots","Leaves"],
                 symptoms: [
                 {part:"Leaves" , description: "Wilting leavess from root disturbance"},
-                {part:"Roots" , description: "Disturbed roots"},
+                {part:"Roots" , description: "Disturbed or dried roots from tunneling"},
                 {part:"Roots" , description: "Plants may topple or die"}
                 ],
                 prevention: ["Maintain healthy soil", "Reduce grub populations only if needed", "Avoid overwatering", "Tolerate minor mole activity if possible"],
@@ -619,12 +631,12 @@
             {
                 name: "Mosaic Virus",
                 type: "Disease (Viral)",
-                plants: ["Beans", "Cucumbers", "Eggplants", "Lettuce", "Melons", "Peppers", "Potatoes", "Roses", "Spinach", "Squashes", "Tomatoes"],
+                plants: ["Beans","Chervil","Coriander", "Cucumbers", "Eggplants", "Lettuce", "Mints","Melons","Parsley", "Peppers", "Potatoes", "Spinach", "Squashes", "Tomatoes"],
                 affectedParts: ["Leaves", "Stems", "Fruit","Buds","Flowers"],
                 symptoms: [
-                {part:"Leaves" , description:"Mottled yellow and green patterns"},
-                {part:"Leaves" , description: "Distorted or curled leaves"},
-                {part:"Leaves" , description: "Stunted leaves"},
+                {part:"Leaves" , description:"Mottled light and dark green patterns (mosaic)"},
+                {part:"Leaves" , description: "Curling leaves"},
+                {part:"Leaves" , description: " Distorted growth, Stunted leaves"},
                 {part:"Stems" , description: "Weak or Stunted growth"},
                 {part:"Fruits" , description: "Misshapen fruit"},
                 {part:"Fruits" , description: "Uneven Ripening"},
@@ -645,9 +657,9 @@
                 {part:"Leaves" , description:"Wilting or yellowing leaves"},
                 {part:"Leaves" , description:"Stunted growth"},
                 {part:"Stems" , description:"Weak or Spindly growth darkened at base"},
-                {part:"Roots" , description:"Rotting bulbs"},
-                {part:"Roots" , description:"Stunted growth"},
-                {part:"Roots" , description:"Maggots present in bulbs"}
+                {part:"Roots" , description:"Rotting roots"},
+                {part:"Roots" , description:"Stunted or decayed roots"},
+                {part:"Roots" , description:"Maggots feeding inside bulbs and roots"}
                 ],
                 prevention: ["Rotate crops", "Use row covers", "Remove plant debris", "Avoid planting in cool, wet soil"],
                 control: ["No effective treatment once bulbs are infested", "Discard affected plants", "Apply beneficial nematodes preemptively", "Use insecticidal seed treatments before planting"],
@@ -673,11 +685,13 @@
             {
                 name: "Rabbits",
                 type: "Animal",
-                plants: ["Beans", "Lettuce", "Peas", "Roses", "Shrubs", "Trees", "Vegetables"],
+                plants: ["Beans", "Broccoli", "Cabbages", "Cauliflowers", "Carrots", "Cucumbers", "Eggplants", "Kale"," Lettuce", "Melons", "Peas", "Peppers", "Spinach", "Squashes", "Tomatoes", "Turnips", "Roses"],
                 affectedParts: ["Leaves", "Stems", "Bark"],
                 symptoms: [
                 {part:"Leaves" , description:"Torn or eaten leaves,Ragged edges"},
-                {part:"Stems" , description:"Clean-cut damage at 45-degree angle"},
+                {part:"Stems" , description:"Clean 45° cuts on stems"},
+                {part:"Stems" , description:" Gnawed or broken stems"},
+                {part:"Stems" , description:" Damaged shoots"},
                 {part:"Flowers" , description:"Eaten or Damaged flowers"},
                 {part:"Buds" , description:"Nipped or eaten buds"}
                 ],
@@ -688,13 +702,13 @@
             {
                 name: "Raccoons",
                 type: "Animal",
-                plants: ["Berries", "Corn", "Grapes", "Melons", "Strawberries"],
+                plants: ["Apples", "Beans", "Beets", "Blackberries", "Carrots", "Cherries", "Corn", "Cucumbers", "Garlic", "Grapes", "Melons", "Onions", "Peaches", "Peppers", "Plums", "Potatoes", "Pumpkins", "Squashes", "Strawberries", "Tomatoes"],
                 affectedParts: ["Fruit"],
                 symptoms: [
                 {part:"Leaves" , description:"Torn or eaten leaves"},
                 {part:"Stems" , description:"Broken Stalks"},
                 {part:"Stems" , description:"Stripped stems from climbing or digging"},
-                {part:"Fruits" , description:"Partially eaten fruit or torn fruits"}
+                {part:"Fruits" , description:"Partially eaten fruit ormissing fruit, torn fruits"}
                 ],
                 prevention: ["Harvest ripe fruit promptly", "Secure compost and garbage", "Install electric fencing"],
                 control: ["Use motion-activated lights or sprinklers", "Apply repellents like capsaicin spray"],
@@ -703,11 +717,11 @@
             {
                 name: "Root Knot Nematodes",
                 type: "Nematode",
-                plants: ["Beans", "Carrots", "Cucumbers", "Lettuce", "Melons", "Peppers", "Potatoes", "Tomatoes"],
+                plants: ["Avocados", "Beans", "Cantaloupes", "Carrots", "Corn", "Cucumbers", "Eggplants", "Lettuce", "Nectarines", "Okras", "Papayas", "Peaches", "Peas", "Peppers", "Potatoes", "Radishes", "Squashes", "Tomatoes", "Watermelons"],
                 affectedParts: ["Roots"],
                 symptoms: [
                 {part:"Leaves" , description:"Yellowing leaves"},
-                {part:"Leaves" , description:"Wilting"},
+                {part:"Leaves" , description:"Wilting leaves despite moisture"},
                 {part:"Stems" , description:"Weak or spindly growth"},
                 {part:"Roots" , description:"Galls or knots on roots"},
                 {part:"Roots" , description:"Stunted growth"}
@@ -719,13 +733,14 @@
             {
                 name: "Rust",
                 type: "Disease (Fungal)",
-                plants: ["Asparagus", "Beans", "Corn", "Hollyhocks", "Roses", "Snapdragons", "Sunflowers"],
+                plants: [ "Beans","Daylilies","Tomatoes", "Corn", "Hollyhocks", "Roses", "Snapdragons", "Sunflowers"],
                 affectedParts: ["Leaves", "Stems"],
                 symptoms: [
-                {part:"Leaves" , description:"Orange, yellow, or brown pustules"},
-                {part:"Leaves" , description:"Powdery spores that rub off"},
-                {part:"Leaves" , description:"Yellowing or browning of leaves"},
-                {part:"Leaves" , description:"Premature defoliation"},
+                {part:"Leaves" , description:"Yellow or pale spots on leaves"},
+                {part:"Leaves" , description:"Orange, brown, or reddish pustules"},
+                {part:"Leaves" , description:" Powdery spores"},
+                {part:"Leaves" , description:"Leaf distortion"},
+                {part:"Leaves" , description:" Premature leaf drop"},
                 {part:"Stems" , description:"Occassional small pustules"},
                 {part:"Stems" , description:"Minor discoloration in severe cases"}
                 ],
@@ -734,30 +749,15 @@
                 link: "https://www.almanac.com/pest/rust-plant-disease"
             },
             {
-                name: "Scale Insects",
-                type: "Insect",
-                plants: ["Apples", "Azaleas", "Citruses", "Hollies", "Magnolias", "Oaks", "Roses", "Shrubs", "Trees"],
-                affectedParts: ["Leaves", "Stems"],
-                symptoms: [
-                {part:"Leaves" , description:"Small, immobile bumps on leaves or stems"},
-                {part:"Leaves" , description:"Yellowing leaves"},
-                {part:"Stems" , description:"Small, immobile bumps on leaves or stems"},
-                {part:"Stems" , description:"Sooty mold growth"}
-                ],
-                prevention: ["Prune infested branches", "Encourage natural predators", "Avoid over-fertilizing"],
-                control: ["Scrape off scales", "Apply horticultural oil during dormancy", "Use insecticidal soap", "Release ladybugs"],
-                link: "https://www.almanac.com/pest/scale-insects"
-            },
-            {
                 name: "Slugs and Snails",
                 type: "Mollusk",
-                plants: ["Basil", "Cabbages", "Hostas", "Lettuce", "Marigolds", "Strawberries", "Tomatoes"],
+                plants: ["Beans", "Beets", "Bok Choys", "Cabbages", "Carrots", "Corn", "Cucumbers", "Kale", "Lettuce", "Melons", "Peas", "Peppers", "Potatoes", "Radishes", "Spinach", "Squashes", "Strawberries", "Tomatoes", "Zucchinis"],
                 affectedParts: ["Leaves", "Stems", "Fruit","Buds","Flowers"],
                 symptoms: [
-                {part:"Leaves" , description:"Large, irregular holes in leaves"},
-                {part:"Leaves" , description:"Silvery slime trails"},
+                {part:"Leaves" , description:"irregular holes in leaves"},
+                {part:"Leaves" , description:"slime trails"},
                 {part:"Leaves" , description:"Ragged leaf edges"},
-                {part:"Stems" , description:"Chewed stems"},
+                {part:"Stems" , description:"Chewed seedlings"},
                 {part:"Stems" , description:"Weakened young shoots"},
                 {part:"Fruits" , description:"Small feeding holes in fruit"},
                 {part:"Fruits" , description:"Surface blemishes"},
@@ -772,13 +772,14 @@
             {
                 name: "Spider Mites",
                 type: "Arachnid",
-                plants: ["Beans", "Cucumbers", "Eggplants", "Houseplants", "Roses", "Strawberries", "Tomatoes"],
+                plants: ["Apples", "Beans", "Blackberries", "Cherries", "Cucumbers", "Eggplants", "Lettuce", "Pears", "Peaches", "Peas", "Peppers", "Plums", "Strawberries", "Tomatoes", "Zucchinis"],
                 affectedParts: ["Leaves"],
                 symptoms: [
                 {part:"Leaves" , description:"Fine webbing on undersides of leaves"},
                 {part:"Leaves" , description:"Stippling (tiny yellow dots)"},
-                {part:"Leaves" , description: "Bronzing or yellowing of leaves"},
+                {part:"Leaves" , description: "Leaf bronzing"},
                 {part:"Leaves" , description:"Leaf drop"},
+                {part:"Leaves" , description:"Stunted growth"},
                 {part:"Stems" , description:"weak or spindly growth in severe infestations"}
                 ],
                 prevention: ["Increase humidity", "Avoid dusty conditions", "Monitor regularly", "Remove weeds"],
@@ -788,12 +789,12 @@
             {
                 name: "Squash Bugs",
                 type: "Insect",
-                plants: ["Cucumbers", "Melons", "Pumpkins", "Squashes"],
+                plants: ["Cucumbers", "Watermelons", "Pumpkins", "Squashes","Cantaloupes","Zucchinis"],
                 affectedParts: ["Leaves", "Stems", "Fruit"],
                 symptoms: [
-                {part:"Leaves" , description:"Yellow spots that turn brown"},
+                {part:"Leaves" , description:"Yellowing leaves"},
                 {part:"Leaves" , description:"Wilting"},
-                {part:"Leaves" , description:"Brown or dying leaf tissue"},
+                {part:"Leaves" , description:"Stippling, Brown or dying leaf tissue"},
                 {part:"Stems" , description:"weak or wilted stems"},
                 {part:"Stems" , description:"Blackened at feeding sites"}
                 ],
@@ -804,7 +805,7 @@
             {
                 name: "Squash Vine Borers",
                 type: "Insect",
-                plants: ["Cucumbers", "Pumpkins", "Squashes", "Zucchinis"],
+                plants: ["Acorn Squashes","Gourds","Hubbard Squashes", "Pumpkins", "Squashes", "Zucchinis"],
                 affectedParts: ["Stems"],
                 symptoms: [
                 {part:"Leaves" , description:"Yellowing leaves"},
@@ -820,7 +821,7 @@
             {
                 name: "Squirrels",
                 type: "Animal",
-                plants: ["Bulbs", "Corn", "Fruit trees", "Sunflowers", "Tomatoes"],
+                plants: ["Almonds", "Apples", "Basil", "Beans", "Blueberries", "Corn", "Crocuses", "Cucumbers", "Daffodils", "Grapes", "Hyacinths", "Lilies", "Melons", "Peaches", "Pecans", "Peas", "Peppers", "Pumpkins", "Raspberries", "Squashes", "Strawberries", "Sunflowers", "Tomatoes", "Tulips"],
                 affectedParts: ["Fruit", "Bulbs", "Seeds"],
                 symptoms: [
                 {part:"Leaves" , description:"Ocassionally nibbled or torn"},
@@ -839,7 +840,7 @@
             {
                 name: "Stink Bugs",
                 type: "Insect",
-                plants: ["Apples", "Beans", "Corn", "Peppers", "Squashes", "Tomatoes"],
+                plants: ["Apples", "Beans", "Blackberries", "Cabbages", "Cherries", "Corn", "Eggplants", "Okras", "Peaches", "Peas", "Pecans", "Peppers", "Squashes", "Sunflowers", "Tomatoes"],
                 affectedParts: ["Fruit"],
                 symptoms: [
                 {part:"Leaves" , description:"Yellowing leaves"},
@@ -859,7 +860,7 @@
             {
                 name: "Thrips",
                 type: "Insect",
-                plants: ["Garlic", "Gladioli", "Irises", "Onions", "Peppers", "Roses", "Tomatoes"],
+                plants: ["Avocados", "Beans", "Blueberries", "Cucumbers", "Garlic", "Grapes", "Impatiens", "Lemons", "Limes", "Onions", "Oranges", "Peppers", "Petunias", "Pumpkins", "Roses", "Strawberries", "Tomatoes"],
                 affectedParts: ["Leaves", "Flowers", "Fruit"],
                 symptoms: [
                 {part:"Leaves" , description:"Silvery streaks or speckling"},
@@ -867,7 +868,7 @@
                 {part:"Leaves" , description:"Distorted growth"},
                 {part:"Leaves" , description:"Tiny black spots"},
                 {part:"Buds" , description:"Nibbled,Deformed buds"},
-                {part:"Flowers" , description:"Deformed flowers"},
+                {part:"Flowers" , description:"Distorted petals"},
                 {part:"Flowers" , description:"Streaks"},
                 {part:"Flowers" , description:"Discolored petals"}
                 ],
@@ -881,8 +882,8 @@
                 plants: ["Eggplants", "Peppers", "Potatoes", "Tomatoes"],
                 affectedParts: ["Leaves", "Stems", "Fruit"],
                 symptoms: [
-                {part:"Leaves" , description:"Chewed or missing leaves"},
-                {part:"Leaves" , description:"Frass (droppings) on leaves"},
+                {part:"Leaves" , description:"Chewed leaf edges"},
+                {part:"Leaves" , description:"Large holes,strippled foliage"},
                 {part:"Leaves" , description:"Defoliation"},
                 {part:"Stems" , description:"Chewed or weakened stems"},
                 {part:"Stems" , description:"Stripped shoots"},
@@ -895,25 +896,9 @@
                 link: "https://www.almanac.com/pest/tomato-hornworms"
             },
             {
-                name: "Verticillium Wilt",
-                type: "Disease (Fungal)",
-                plants: ["Eggplants", "Maple trees", "Peppers", "Potatoes", "Strawberries", "Tomatoes"],
-                affectedParts: ["Leaves", "Stems"],
-                symptoms: [
-                {part:"Leaves" , description:"Yellowing between veins or on leaf margins"},
-                {part:"Leaves" , description:"Wilting, especially during heat of day"},
-                {part:"Leaves" , description:"Brown streaking in vascular tissue"},
-                {part:"Stems" , description:"Stunted growth"},
-                {part:"Stems" , description:"Discolored or wilted stems"}
-                ],
-                prevention: ["Plant resistant varieties", "Rotate crops", "Solarize soil", "Avoid susceptible plants"],
-                control: ["Remove infected plants", "Fumigate soil if severe", "Use resistant rootstocks"],
-                link: "https://www.almanac.com/pest/verticillium-wilt"
-            },
-            {
                 name: "Whiteflies",
                 type: "Insect",
-                plants: ["Cabbages", "Citruses", "Cucumbers", "Peppers", "Poinsettias", "Tomatoes"],
+                plants: ["Cabbages", "Eggplants", "Grapefruits", "Kumquats", "Lemons", "Limes", "Mandarins", "Okras", "Peppers", "Pomelos", "Oranges", "Sweet Potatoes", "Tomatoes"],
                 affectedParts: ["Leaves"],
                 symptoms: [
                 {part:"Leaves" , description:"Yellowing leaves"},
@@ -929,7 +914,7 @@
             {
                 name: "Wireworms",
                 type: "Insect",
-                plants: ["Beans", "Carrots", "Corn", "Potatoes", "Wheat"],
+                plants: ["Beans", "Beets", "Cabbage", "Carrots", "Corn", "Lettuce", "Onions", "Peas", "Potatoes", "Radishes", "Strawberries"],
                 affectedParts: ["Roots", "Tubers", "Seeds","Fruit"],
                 symptoms: [
                 {part:"Seeds" , description:"Yellowing leaves"},
@@ -938,7 +923,7 @@
                 {part:"Roots" , description:"Yellowing leaves"},
                 {part:"Roots" , description:"Wilting"},
                 {part:"Roots" , description:"Stunted growth"},
-                {part:"Roots" , description:"Poor germination"},
+                {part:"Roots" , description:"Poor root growth"},
                 {part:"Roots" , description:"Chewed seedlings"},
                 {part:"Roots" , description:"Tunnels in roots"},
                 {part:"Tubers" , description:"Yellowing leaves"},
