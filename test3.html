@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Pest Diagnostic Tool</title>
+</head>
+<body>
+    <div id="CalculatorContainer"></div>
+
+    <script>
+        // Pest data structure with image URLs
+        const pestData = [
+            {
+                name: "Anthracnose",
+                type: "Disease (Fungal)",
+                plants: ["Beans", "Cucumbers", "Melons", "Peppers", "Tomatoes"],
+                affectedParts: ["Leaves", "Stems", "Fruit"],
+                symptoms: [
+                {part:"Leaves",description:"Dark spots or blotches"},
+                {part:"Leaves",description:"Yellowing around spots"},
+                {part:"Leaves",description:"Curling or distorted leaves"},
+                {part:"Leaves",description:"Premature leaf drop"},
+                {part:"Stems",description: "Dark or sunken areas on stems"},
+                {part:"Stems",description: "Tips of branches may die back"},
+                {part:"Fruit",description: "Dark or sunken spots or patches on fruit"}
+                ],
+                prevention: ["Avoid overhead watering", "Improve air circulation", "Rotate crops", "Plant resistant varieties"],
+                control: ["Prune infected areas", "Apply copper or sulfur-based fungicides early", "Destroy fallen debris"],
+                link: "https://www.almanac.com/pest/anthracnose",
+                image: "https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/control-voles-in-garden.jpg"
+            },
+            {
+                name: "Aphids",
+                type: "Insect (Sap-sucking pest)",
+                plants: ["Beets", "Beans", "Cucumbers", "Gladioli", "Impatiens", "Lettuce", "Melons", "Petunias", "Phloxes", "Pumpkins", "Rudbeckias", "Spinach", "Squashes", "Tomatoes"],
+                affectedParts: ["Leaves", "Stems", "Flowers", "Buds"],
+                symptoms: [
+                {part:"Leaves",description:"Curled or distorted leaves"},
+                {part:"Leaves",description: "Sticky residue (honeydew) on leaves"},
+                {part:"Leaves",description:"Yellow leaves"},
+                {part:"Stems",description: "Clusters of tiny insects"},
+                {part:"Stems",description:"Sticky residue on stems"},
+                {part:"Stems",description:"Stunted growth or weakened shoots"},
+                {part:"Flowers",description:"Deformed petals"},
+                {part:"Flowers",description:"Flowers may drop early"},
+                {part:"Buds",description:"Distorted buds"},
+                {part:"Buds",description:"Buds fail to open"}
+                ],
+                prevention: ["Monitor regularly", "Avoid over-fertilizing", "Encourage beneficial insects such as ladybugs or lacewings", "Remove weeds nearby"],
+                control: ["Use a high pressure spray from the garden hose", "Follow up with two applications of insecticidal soap, one week apart"],
+                link: "https://www.almanac.com/pest/aphids",
+                image: "https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/control-voles-in-garden.jpg"
+            },
+            {
+                name: "Armyworm",
+                type: "Insect",
+                plants: ["Beans", "Corn"],
+                affectedParts: ["Leaves", "Stems", "Fruit"],
+                symptoms: [
+                {part:"Leaves",description:"Chewed or ragged leaves"},
+                {part:"Leaves",description:"Holes in leaves"},
+                {part:"Leaves",description:"Missing leaves"},
+                {part:"Stems",description:"Weakening of shoots"},
+                {part:"Fruit",description:"Chewed spots or holes in fruit"}
+                ],
+                prevention: ["Monitor regularly", "Remove weeds", "Avoid planting susceptible crops in infested areas"],
+                control: ["Scout early and often", "Apply Bacillus thuringiensis (Bt) or spinosad", "Use neem oil", "Attract natural predators like birds and parasitic wasps"],
+                link: "https://www.almanac.com/pest/armyworms-how-get-rid-lawn-pest",
+                image: "https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/control-voles-in-garden.jpg"
+            },
+            {
+                name: "Asparagus Bugs",
+                type: "Insect",
+                plants: ["Asparagus"],
+                affectedParts: ["Leaves", "Stems"],
+                symptoms: [{part:"Leaves", description:"Yellowing foliage"},
+                {part:"Leaves", description:"Distorted or curled foliage"},
+                {part:"Stems", description:"Bent or scarred spears"},
+                {part:"Leaves", description:"Tiny black eggs on spears"}
+                ],
+                prevention: ["Remove plant debris after harvest", "Encourage beneficial insects", "Rotate crops away from asparagus beds"],
+                control: ["Handpick beetles and larvae", "Use neem oil or insecticidal soap", "Apply sprays if infestation is severe"],
+                link: "n/a",
+                image: "https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/control-voles-in-garden.jpg"
+            },
+            {
+                name: "Aster Yellows",
+                type: "Disease (Phytoplasma, spread by leafhoppers)",
+                plants: ["Asters", "Black-eyed Susans", "Carrots", "Celery", "Coneflowers", "Daisies", "Lettuce", "Potatoes", "Tomatoes", "Zinnias"],
+                affectedParts: ["Leaves", "Stems", "Fruit/Vegetable", "Flowers"],
+                symptoms: [
+                {part:"Leaves" , description:"Yellowing or discolored leaves"},
+                {part:"Leaves" , description:"Curling or distorted leaves"},
+                {part:"Stems" , description:"Weak or spindly growth"},
+                {part:"Stems" , description:"Witch's broom (multiple small stems or shoots may emerge from a single point)"},
+                {part:"Fruit/Vegetable" , description:"Deformed carrots"},
+                {part:"Flowers" , description:"Deformed flowers"},
+                {part:"Flowers" , description:"Pale or green or leaflike flowers"},
+                {part:"Flowers" , description:"Sterility"}
+                ],
+                prevention: ["Eliminate nearby weeds", "Use resistant varieties", "Monitor and manage leafhopper populations early"],
+                control: ["Remove infected plants immediately", "Control leafhoppers with floating row covers or insecticidal soap"],
+                link: "n/a",
+                image: "https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/control-voles-in-garden.jpg"
+            }
+        ];
+
+        // Function to create and inject the CSS
+        function injectStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                #CalculatorContainer * {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding: 0;
+                    font-family: 'Georgia', serif; 
+                }
+                
+                #CalculatorContainer body {
+                    background-color: #fff;
+                    color: #333;
+                    line-height: 1.6;
+                    padding: 20px;
+                }
+                
+                #CalculatorContainer .container {
+                    max-width: 1000px;
+                    margin: 0 auto;
+                    background: #f9f5e8;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                    padding: 30px;
+                }
+                
+                #CalculatorContainer header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding-bottom: 20px;
+                    border-bottom: 2px solid #ddd4d4;
+                }
+                
+                #CalculatorContainer h1 {
+                    color: #ad2a24;
+                    margin-bottom: 10px;
+                }
+                
+                #CalculatorContainer .description {
+                    color: #666;
+                    font-size: 16px;
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+                
+                #CalculatorContainer .step {
+                    margin-bottom: 25px;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 8px;
+                }
+                
+                #CalculatorContainer .step-title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                    color: #af6b35;
+                }
+                
+                #CalculatorContainer .form-group {
+                    margin-bottom: 15px;
+                }
+                
+                #CalculatorContainer label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 500;
+                    color: #555;
+                }
+                
+                #CalculatorContainer select {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 16px;
+                    background-color: white;
+                    transition: border-color 0.3s;
+                }
+                
+                #CalculatorContainer select:focus {
+                    outline: none;
+                    border-color: #dfebe0;
+                    box-shadow: 0 0 0 2px rgba(220, 104, 89, 0.2);
+                }
+                
+                #CalculatorContainer .symptoms-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    padding: 10px;
+                    background: white;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                }
+                
+                #CalculatorContainer .symptom-option {
+                    flex: 1 0 calc(33.333% - 10px);
+                    padding: 10px;
+                    border: 1px solid #eee;
+                    border-radius: 4px;
+                    display: flex;
+                    align-items: center;
+                    transition: background-color 0.2s;
+                    min-width: 200px;
+                }
+                
+                #CalculatorContainer .symptom-option:hover {
+                    background: #f5f5f5;
+                }
+                
+                #CalculatorContainer .symptom-option input[type="radio"] {
+                    margin-right: 10px;
+                    accent-color: #4CAF50;
+                }
+                
+                #CalculatorContainer .symptom-option label {
+                    margin-bottom: 0;
+                    cursor: pointer;
+                    flex-grow: 1;
+                }
+                
+                #CalculatorContainer .result {
+                    margin-top: 30px;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 8px;
+                    display: none;
+                }
+                
+                #CalculatorContainer .result h3 {
+                    margin-bottom: 15px;
+                    color: #af6b35;
+                }
+                
+                #CalculatorContainer .pest-info {
+                    background: white;
+                    padding: 15px;
+                    border-radius: 6px;
+                    margin-bottom: 15px;
+                    border: 1px solid #eee;
+                }
+                
+                #CalculatorContainer .pest-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    margin-bottom: 15px;
+                }
+                
+                #CalculatorContainer .pest-image {
+                    width: 800px;
+                    height: 500px;
+                    margin:30px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 1px solid #ddd;
+                }
+                
+                #CalculatorContainer .pest-name {
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: #ad2a24;
+                }
+                
+                #CalculatorContainer .pest-type {
+                    display: inline-block;
+                    background: #f9f5e8;
+                    color: #ad2a24;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    margin-top: 5px;
+                }
+                
+                #CalculatorContainer .pest-detail {
+                    margin-bottom: 8px;
+                }
+                
+                #CalculatorContainer .pest-detail strong {
+                    color: #555;
+                }
+                
+                #CalculatorContainer .pest-link {
+                    display: inline-block;
+                    padding: 10px 15px;
+                    background: #4CAF50;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 4px;
+                    transition: background 0.3s;
+                    margin-top: 10px;
+                }
+                
+                #CalculatorContainer .pest-link:hover {
+                    background: #3d8b40;
+                }
+                
+                #CalculatorContainer .reset-btn {
+                    display: inline-block;
+                    padding: 10px 15px;
+                    background: #666;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-top: 15px;
+                    transition: background 0.3s;
+                }
+                
+                #CalculatorContainer .reset-btn:hover {
+                    background: #555;
+                }
+                
+                #CalculatorContainer .no-results {
+                    text-align: center;
+                    padding: 20px;
+                    color: #666;
+                    font-style: italic;
+                }
+                
+                @media (max-width: 768px) {
+                    #CalculatorContainer .container {
+                        padding: 15px;
+                    }
+                    
+                    #CalculatorContainer .step {
+                        padding: 15px;
+                    }
+                    
+                    #CalculatorContainer select {
+                        font-size: 16px;
+                    }
+                    
+                    #CalculatorContainer .symptom-option {
+                        flex: 1 0 100%;
+                    }
+                    
+                    #CalculatorContainer .pest-header {
+                        flex-direction: column;
+                        text-align: center;
+                    }
+                    
+                    #CalculatorContainer .pest-image {
+                        width: 100%;
+                        max-width: 250px;
+                        height: auto;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Function to create the HTML structure
+        function createHTMLStructure() {
+            const calculatorContainer = document.getElementById('CalculatorContainer');
+            
+            calculatorContainer.innerHTML = `
+                <div class="container">
+                    <header>
+                        <h1>Plant Pest Diagnostic Tool</h1>
+                        <p class="description">Identify pests and diseases affecting your plants by selecting your plant type, problem area, and symptoms</p>
+                    </header>
+                    
+                    <div class="step">
+                        <h2 class="step-title">Step 1: Select a Plant</h2>
+                        <div class="form-group">
+                            <label for="plant-select">Choose a plant:</label>
+                            <select id="plant-select">
+                                <option value="">-- Select a plant --</option>
+                                <!-- Plant options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="problem-area-step" style="display: none;">
+                        <h2 class="step-title">Step 2: Select Problem Area</h2>
+                        <div class="form-group">
+                            <label for="problem-area-select">Where is the problem located?</label>
+                            <select id="problem-area-select">
+                                <option value="">-- Select problem area --</option>
+                                <!-- Problem area options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="symptoms-step" style="display: none;">
+                        <h2 class="step-title">Step 3: Select Symptoms</h2>
+                        <div class="symptoms-container" id="symptoms-container">
+                            <!-- Symptoms will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="result" id="result">
+                        <h3>Diagnosis Result</h3>
+                        <div class="pest-info" id="pest-info">
+                            <!-- Pest information will be populated by JavaScript -->
+                        </div>
+                        <a href="#" class="pest-link" id="pest-link" target="_blank">Learn More About This Pest</a>
+                        <br>
+                        <button class="reset-btn" onclick="resetTool()">Start Over</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Extract all unique plants from pest data
+        const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
+
+        // DOM elements
+        let plantSelectEl, problemAreaStepEl, problemAreaSelectEl, symptomsStepEl, symptomsContainerEl, resultEl, pestInfoEl, pestLinkEl;
+
+        // State variables
+        let selectedPlant = null;
+        let selectedProblemArea = null;
+        let filteredPests = [];
+
+        // Initialize the tool
+        function initTool() {
+            plantSelectEl = document.getElementById('plant-select');
+            problemAreaStepEl = document.getElementById('problem-area-step');
+            problemAreaSelectEl = document.getElementById('problem-area-select');
+            symptomsStepEl = document.getElementById('symptoms-step');
+            symptomsContainerEl = document.getElementById('symptoms-container');
+            resultEl = document.getElementById('result');
+            pestInfoEl = document.getElementById('pest-info');
+            pestLinkEl = document.getElementById('pest-link');
+
+            // Populate plant select options
+            allPlants.forEach(plant => {
+                const option = document.createElement('option');
+                option.value = plant;
+                option.textContent = plant;
+                plantSelectEl.appendChild(option);
+            });
+
+            // Event listeners
+            plantSelectEl.addEventListener('change', handlePlantChange);
+            problemAreaSelectEl.addEventListener('change', handleProblemAreaChange);
+        }
+
+        // Plant change handler
+        function handlePlantChange() {
+            selectedPlant = plantSelectEl.value;
+
+            if (selectedPlant) {
+                problemAreaStepEl.style.display = 'block';
+                problemAreaSelectEl.innerHTML = '<option value="">-- Select problem area --</option>';
+
+                let affectedPartsForPlant = [...new Set(pestData
+                    .filter(pest => pest.plants.includes(selectedPlant))
+                    .flatMap(pest => pest.affectedParts))].sort();
+
+                // Remove duplicates
+                affectedPartsForPlant = [...new Set(affectedPartsForPlant)].sort();
+
+                affectedPartsForPlant.forEach(part => {
+                    const option = document.createElement('option');
+                    option.value = part;
+                    option.textContent = part;
+                    problemAreaSelectEl.appendChild(option);
+                });
+
+                problemAreaStepEl.scrollIntoView({ behavior: 'smooth' });
+                symptomsStepEl.style.display = 'none';
+                resultEl.style.display = 'none';
+                symptomsContainerEl.innerHTML = '';
+            } else {
+                problemAreaStepEl.style.display = 'none';
+                symptomsStepEl.style.display = 'none';
+                resultEl.style.display = 'none';
+                symptomsContainerEl.innerHTML = '';
+            }
+        }
+
+        // Problem area change handler
+        function handleProblemAreaChange() {
+            selectedProblemArea = problemAreaSelectEl.value;
+
+            if (selectedProblemArea) {
+                // Filter pests based on selected plant and problem area
+                filteredPests = pestData.filter(pest =>
+                    pest.plants.includes(selectedPlant) &&
+                    pest.affectedParts.includes(selectedProblemArea)
+                );
+
+                symptomsStepEl.style.display = 'block';
+                symptomsContainerEl.innerHTML = '';
+
+                if (filteredPests.length === 0) {
+                    symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this combination.</div>';
+                    return;
+                }
+
+                // Get all symptoms for the selected problem area from filtered pests
+                const allSymptoms = [];
+                filteredPests.forEach(pest => {
+                    pest.symptoms.forEach(symptom => {
+                        if (symptom.part === selectedProblemArea) {
+                            // Check if this symptom is already in our list
+                            const isDuplicate = allSymptoms.some(s => 
+                                s.part === symptom.part && s.description === symptom.description
+                            );
+                            
+                            if (!isDuplicate) {
+                                allSymptoms.push(symptom);
+                            }
+                        }
+                    });
+                });
+
+                if (allSymptoms.length === 0) {
+                    symptomsContainerEl.innerHTML = '<div class="no-results">No symptoms found for this problem area.</div>';
+                    return;
+                }
+
+                // Sort symptoms alphabetically by description
+                allSymptoms.sort((a, b) => a.description.localeCompare(b.description));
+
+                // Display symptoms in a flex container (no scroll)
+                allSymptoms.forEach(symptom => {
+                    const symptomOption = document.createElement('div');
+                    symptomOption.className = 'symptom-option';
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'symptom';
+                    radio.value = symptom.description;
+                    radio.id = `symptom-${symptom.description.replace(/\s+/g, '-').toLowerCase()}`;
+                    radio.addEventListener('change', () => handleSymptomChange(symptom.description));
+
+                    const label = document.createElement('label');
+                    label.htmlFor = radio.id;
+                    label.textContent = symptom.description;
+
+                    symptomOption.appendChild(radio);
+                    symptomOption.appendChild(label);
+                    symptomsContainerEl.appendChild(symptomOption);
+                });
+
+                symptomsStepEl.scrollIntoView({ behavior: 'smooth' });
+                resultEl.style.display = 'none';
+                pestInfoEl.innerHTML = '';
+                pestLinkEl.style.display = 'none';
+            } else {
+                symptomsStepEl.style.display = 'none';
+                resultEl.style.display = 'none';
+                symptomsContainerEl.innerHTML = '';
+            }
+        }
+
+        // Symptom change handler - find pest(s) for selected symptom and show first pest info
+        function handleSymptomChange(selectedSymptom) {
+            const matchingPests = filteredPests.filter(pest => 
+                pest.symptoms.some(symptom => 
+                    symptom.part === selectedProblemArea && symptom.description === selectedSymptom
+                )
+            );
+
+            if (matchingPests.length > 0) {
+                const pest = matchingPests[0]; // Show first matched pest
+
+                // Format symptoms for display
+                const formattedSymptoms = pest.symptoms
+                    .filter(symptom => symptom.part === selectedProblemArea)
+                    .map(symptom => symptom.description)
+                    .join('; ');
+
+                // Create pest info with image
+                pestInfoEl.innerHTML = `
+                    <div class="pest-header">
+                        <div>
+                            <div class="pest-name">${pest.name}</div>
+                            <div class="pest-type">${pest.type}</div>
+                        </div>   
+                    </div>
+                    <img class="pest-image" src="${pest.image}" alt="${pest.name}">
+                    <div class="pest-detail"><strong>Plants Affected:</strong> ${pest.plants.join(', ')}</div>
+                    <div class="pest-detail"><strong>Affected Parts:</strong> ${pest.affectedParts.join(', ')}</div>
+                    <div class="pest-detail"><strong>Symptoms:</strong> ${formattedSymptoms}</div>
+                    ${pest.prevention ? `<div class="pest-detail"><strong>Prevention:</strong> ${Array.isArray(pest.prevention) ? pest.prevention.join('; ') : pest.prevention}</div>` : ''}
+                    ${pest.control ? `<div class="pest-detail"><strong>Control:</strong> ${Array.isArray(pest.control) ? pest.control.join('; ') : pest.control}</div>` : ''}
+                `;
+
+                if (pest.link && pest.link !== "n/a") {
+                    pestLinkEl.href = pest.link;
+                    pestLinkEl.style.display = 'inline-block';
+                } else {
+                    pestLinkEl.style.display = 'none';
+                }
+
+                resultEl.style.display = 'block';
+                resultEl.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                pestInfoEl.innerHTML = '<div class="no-results">No pests found matching your selection. Please try different symptoms.</div>';
+                pestLinkEl.style.display = 'none';
+                resultEl.style.display = 'block';
+            }
+        }
+
+        // Reset tool state and UI
+        function resetTool() {
+            selectedPlant = null;
+            selectedProblemArea = null;
+            filteredPests = [];
+
+            plantSelectEl.value = '';
+            problemAreaSelectEl.value = '';
+            symptomsContainerEl.innerHTML = '';
+
+            const radios = document.querySelectorAll('input[name="symptom"]');
+            radios.forEach(radio => radio.checked = false);
+
+            problemAreaStepEl.style.display = 'none';
+            symptomsStepEl.style.display = 'none';
+            resultEl.style.display = 'none';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // On window load initialize everything
+        window.onload = function () {
+            injectStyles();
+            createHTMLStructure();
+            initTool();
+        };
+    </script>
+</body>
+</html>
