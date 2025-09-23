@@ -2126,7 +2126,13 @@
                     radio.name = 'symptom';
                     radio.value = symptom.description;
                     radio.id = `symptom-${symptom.description.replace(/\s+/g, '-').toLowerCase()}`;
-                    radio.addEventListener('change', () => handleSymptomChange(symptom.description));
+                    
+                    // MODIFIED: Use a more dynamic event listener
+                    radio.addEventListener('change', function() {
+                        if (this.checked) {
+                            handleSymptomChange(symptom.description);
+                        }
+                    });
 
                     const label = document.createElement('label');
                     label.htmlFor = radio.id;
@@ -2152,6 +2158,9 @@
 
         // Symptom change handler - find all pests for selected symptom
         function handleSymptomChange(selectedSymptom) {
+            // Clear any previous additional symptom selections
+            clearAdditionalSymptoms();
+            
             const matchingPests = filteredPests.filter(pest => 
                 pest.symptoms.some(symptom => 
                     symptom.part === selectedProblemArea && symptom.description === selectedSymptom
@@ -2169,6 +2178,18 @@
                 // If 3 or fewer pests, display results immediately
                 displayPestResults(matchingPests);
             }
+        }
+
+        // Clear additional symptoms when main symptom changes
+        function clearAdditionalSymptoms() {
+            additionalSymptomsStepEl.style.display = 'none';
+            additionalSymptomsContainerEl.innerHTML = '';
+            firstSymptom = null;
+            firstSymptomPests = [];
+            
+            // Clear any selected additional symptoms
+            const additionalRadios = document.querySelectorAll('input[name="additional-symptom"]');
+            additionalRadios.forEach(radio => radio.checked = false);
         }
 
         // Show additional symptoms for narrowing down results
@@ -2212,7 +2233,13 @@
                 radio.name = 'additional-symptom';
                 radio.value = symptom.description;
                 radio.id = `additional-symptom-${symptom.description.replace(/\s+/g, '-').toLowerCase()}`;
-                radio.addEventListener('change', () => handleAdditionalSymptomChange(symptom.description));
+                
+                // MODIFIED: Use a more dynamic event listener
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        handleAdditionalSymptomChange(symptom.description);
+                    }
+                });
 
                 const label = document.createElement('label');
                 label.htmlFor = radio.id;
@@ -2264,8 +2291,7 @@
                             </div>   
                         </div>
                         <img class="pest-image" src="${pest.image}" alt="${pest.name}">
-${pest.caption ? `<div class="pest-caption">${pest.caption}</div>` : ""}
-
+                        ${pest.caption ? `<div class="pest-caption">${pest.caption}</div>` : ""}
                         
                         <div class="pest-detail"><strong>Plants Affected:</strong> ${pest.plants.join(', ')}</div>
                         <div class="pest-detail"><strong>Affected Parts:</strong> ${pest.affectedParts.join(', ')}</div>
