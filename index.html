@@ -1412,7 +1412,7 @@
                 control: ["Prune infested branches","Apply horticultural oil during dormant season","Use insecticidal soap during crawler stage","Targeting the crawler stage with insecticidal soap or horticultural oil minimizes harm to beneficial insects"],
                 link: "https://www.almanac.com/pest/scale",
                 image: "https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/control-voles-in-garden.jpg"
-            }      
+            }   
         ];
 
         // Function to create and inject the CSS
@@ -1731,6 +1731,21 @@
             border: none;
             border-top: 2px solid #eee;
         }
+
+        /* Additional symptom step styling */
+        #CalculatorContainer .additional-symptom-step {
+            background: #f0f8ff;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        #CalculatorContainer .additional-symptom-note {
+            background: #e8f5e8;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #2e7d32;
+        }
         
         /* Mobile responsiveness */
         @media (max-width: 768px) {
@@ -1870,6 +1885,16 @@
                         </div>
                     </div>
                     
+                    <div class="step" id="additional-symptoms-step" style="display: none;">
+                        <h2 class="step-title">Step 4: Select Additional Symptom</h2>
+                        <div class="additional-symptom-note">
+                            Your first symptom matched several pests. Please select an additional symptom to narrow down the results.
+                        </div>
+                        <div class="symptoms-container" id="additional-symptoms-container">
+                            <!-- Additional symptoms will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
                     <div class="result" id="result">
                         <h3>Diagnosis Result</h3>
                         <div class="pest-info" id="pest-info">
@@ -1886,12 +1911,15 @@
         const allPlants = [...new Set(pestData.flatMap(pest => pest.plants))].sort();
 
         // DOM elements
-        let plantSelectEl, problemAreaStepEl, problemAreaSelectEl, symptomsStepEl, symptomsContainerEl, resultEl, pestInfoEl, pestLinkEl;
+        let plantSelectEl, problemAreaStepEl, problemAreaSelectEl, symptomsStepEl, symptomsContainerEl;
+        let additionalSymptomsStepEl, additionalSymptomsContainerEl, resultEl, pestInfoEl;
 
         // State variables
         let selectedPlant = null;
         let selectedProblemArea = null;
         let filteredPests = [];
+        let firstSymptom = null;
+        let firstSymptomPests = [];
 
         // Initialize the tool
         function initTool() {
@@ -1900,9 +1928,10 @@
             problemAreaSelectEl = document.getElementById('problem-area-select');
             symptomsStepEl = document.getElementById('symptoms-step');
             symptomsContainerEl = document.getElementById('symptoms-container');
+            additionalSymptomsStepEl = document.getElementById('additional-symptoms-step');
+            additionalSymptomsContainerEl = document.getElementById('additional-symptoms-container');
             resultEl = document.getElementById('result');
             pestInfoEl = document.getElementById('pest-info');
-            pestLinkEl = document.getElementById('pest-link');
 
             // Populate plant select options
             allPlants.forEach(plant => {
@@ -1941,13 +1970,17 @@
 
                 problemAreaStepEl.scrollIntoView({ behavior: 'smooth' });
                 symptomsStepEl.style.display = 'none';
+                additionalSymptomsStepEl.style.display = 'none';
                 resultEl.style.display = 'none';
                 symptomsContainerEl.innerHTML = '';
+                additionalSymptomsContainerEl.innerHTML = '';
             } else {
                 problemAreaStepEl.style.display = 'none';
                 symptomsStepEl.style.display = 'none';
+                additionalSymptomsStepEl.style.display = 'none';
                 resultEl.style.display = 'none';
                 symptomsContainerEl.innerHTML = '';
+                additionalSymptomsContainerEl.innerHTML = '';
             }
         }
 
@@ -2017,17 +2050,19 @@
                 });
 
                 symptomsStepEl.scrollIntoView({ behavior: 'smooth' });
+                additionalSymptomsStepEl.style.display = 'none';
                 resultEl.style.display = 'none';
                 pestInfoEl.innerHTML = '';
-                pestLinkEl.style.display = 'none';
             } else {
                 symptomsStepEl.style.display = 'none';
+                additionalSymptomsStepEl.style.display = 'none';
                 resultEl.style.display = 'none';
                 symptomsContainerEl.innerHTML = '';
+                additionalSymptomsContainerEl.innerHTML = '';
             }
         }
 
-        // Symptom change handler - find all pests for selected symptom and display them
+        // Symptom change handler - find all pests for selected symptom
         function handleSymptomChange(selectedSymptom) {
             const matchingPests = filteredPests.filter(pest => 
                 pest.symptoms.some(symptom => 
@@ -2035,6 +2070,91 @@
                 )
             );
 
+            // NEW LOGIC: If more than 3 pests match, ask for additional symptom
+            if (matchingPests.length > 3) {
+                firstSymptom = selectedSymptom;
+                firstSymptomPests = matchingPests;
+                
+                // Show additional symptom selection
+                showAdditionalSymptoms(matchingPests);
+            } else {
+                // If 3 or fewer pests, display results immediately
+                displayPestResults(matchingPests);
+            }
+        }
+
+        // Show additional symptoms for narrowing down results
+        function showAdditionalSymptoms(pests) {
+            additionalSymptomsStepEl.style.display = 'block';
+            additionalSymptomsContainerEl.innerHTML = '';
+
+            // Get all symptoms from the pests that matched the first symptom
+            const allSymptoms = [];
+            pests.forEach(pest => {
+                pest.symptoms.forEach(symptom => {
+                    if (symptom.part === selectedProblemArea && symptom.description !== firstSymptom) {
+                        // Check if this symptom is already in our list
+                        const isDuplicate = allSymptoms.some(s => 
+                            s.part === symptom.part && s.description === symptom.description
+                        );
+                        
+                        if (!isDuplicate) {
+                            allSymptoms.push(symptom);
+                        }
+                    }
+                });
+            });
+
+            if (allSymptoms.length === 0) {
+                // If no additional symptoms available, just show the results
+                displayPestResults(pests);
+                return;
+            }
+
+            // Sort symptoms alphabetically by description
+            allSymptoms.sort((a, b) => a.description.localeCompare(b.description));
+
+            // Display symptoms in a scrollable container
+            allSymptoms.forEach(symptom => {
+                const symptomOption = document.createElement('div');
+                symptomOption.className = 'symptom-option';
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'additional-symptom';
+                radio.value = symptom.description;
+                radio.id = `additional-symptom-${symptom.description.replace(/\s+/g, '-').toLowerCase()}`;
+                radio.addEventListener('change', () => handleAdditionalSymptomChange(symptom.description));
+
+                const label = document.createElement('label');
+                label.htmlFor = radio.id;
+                label.textContent = symptom.description;
+
+                symptomOption.appendChild(radio);
+                symptomOption.appendChild(label);
+                additionalSymptomsContainerEl.appendChild(symptomOption);
+            });
+
+            additionalSymptomsStepEl.scrollIntoView({ behavior: 'smooth' });
+            resultEl.style.display = 'none';
+            pestInfoEl.innerHTML = '';
+        }
+
+        // Handle additional symptom selection
+        function handleAdditionalSymptomChange(additionalSymptom) {
+            // Find pests that match BOTH the first symptom and the additional symptom
+            const finalMatchingPests = firstSymptomPests.filter(pest => 
+                pest.symptoms.some(symptom => 
+                    symptom.part === selectedProblemArea && symptom.description === additionalSymptom
+                )
+            );
+
+            // Display the final results
+            displayPestResults(finalMatchingPests);
+        }
+
+        // Display pest results
+        function displayPestResults(matchingPests) {
             if (matchingPests.length > 0) {
                 pestInfoEl.innerHTML = ''; // Clear previous results
                 
@@ -2081,16 +2201,23 @@
             selectedPlant = null;
             selectedProblemArea = null;
             filteredPests = [];
+            firstSymptom = null;
+            firstSymptomPests = [];
 
             plantSelectEl.value = '';
             problemAreaSelectEl.value = '';
             symptomsContainerEl.innerHTML = '';
+            additionalSymptomsContainerEl.innerHTML = '';
 
             const radios = document.querySelectorAll('input[name="symptom"]');
             radios.forEach(radio => radio.checked = false);
 
+            const additionalRadios = document.querySelectorAll('input[name="additional-symptom"]');
+            additionalRadios.forEach(radio => radio.checked = false);
+
             problemAreaStepEl.style.display = 'none';
             symptomsStepEl.style.display = 'none';
+            additionalSymptomsStepEl.style.display = 'none';
             resultEl.style.display = 'none';
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
