@@ -9,8 +9,8 @@
     <div id="CalculatorContainer"></div>
 
     <script>
-            const pestData = [
-             {
+        const pestData = [
+            {
                 name: "Anthracnose",
                 type: "Disease (Fungal)",
                 plants: ["Beans", "Cucumbers", "Melons", "Peppers", "Tomatoes"],
@@ -1522,6 +1522,7 @@
             font-size: 15px;
         }
         
+        /* NEW: Scrollable symptoms container */
         #CalculatorContainer .symptoms-container {
             display: flex;
             flex-wrap: wrap;
@@ -1530,6 +1531,29 @@
             background: white;
             border: 2px solid #eee;
             border-radius: 10px;
+            max-height: 300px; /* Set maximum height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #B2BEB5 #f1f1f1; /* For Firefox */
+        }
+        
+        /* Custom scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+        #CalculatorContainer .symptoms-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #CalculatorContainer .symptoms-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        #CalculatorContainer .symptoms-container::-webkit-scrollbar-thumb {
+            background: #B2BEB5;
+            border-radius: 4px;
+        }
+        
+        #CalculatorContainer .symptoms-container::-webkit-scrollbar-thumb:hover {
+            background: #9da9a0;
         }
         
         #CalculatorContainer .symptom-option {
@@ -1746,6 +1770,11 @@
             #CalculatorContainer .pest-name {
                 font-size: 20px;
             }
+            
+            /* Adjust scrollable container for mobile */
+            #CalculatorContainer .symptoms-container {
+                max-height: 250px; /* Smaller max-height on mobile */
+            }
         }
         
         @media (max-width: 480px) {
@@ -1767,6 +1796,10 @@
             
             #CalculatorContainer .pest-detail {
                 font-size: 14px;
+            }
+            
+            #CalculatorContainer .symptoms-container {
+                max-height: 200px; /* Even smaller on very small screens */
             }
         }
         
@@ -1962,7 +1995,7 @@
                 // Sort symptoms alphabetically by description
                 allSymptoms.sort((a, b) => a.description.localeCompare(b.description));
 
-                // Display symptoms in a flex container (no scroll)
+                // Display symptoms in a scrollable container
                 allSymptoms.forEach(symptom => {
                     const symptomOption = document.createElement('div');
                     symptomOption.className = 'symptom-option';
@@ -1994,55 +2027,54 @@
             }
         }
 
-        // Symptom change handler - find pest(s) for selected symptom and show first pest info
         // Symptom change handler - find all pests for selected symptom and display them
-function handleSymptomChange(selectedSymptom) {
-    const matchingPests = filteredPests.filter(pest => 
-        pest.symptoms.some(symptom => 
-            symptom.part === selectedProblemArea && symptom.description === selectedSymptom
-        )
-    );
+        function handleSymptomChange(selectedSymptom) {
+            const matchingPests = filteredPests.filter(pest => 
+                pest.symptoms.some(symptom => 
+                    symptom.part === selectedProblemArea && symptom.description === selectedSymptom
+                )
+            );
 
-    if (matchingPests.length > 0) {
-        pestInfoEl.innerHTML = ''; // Clear previous results
-        
-        matchingPests.forEach(pest => {
-            // Format symptoms for display
-            const formattedSymptoms = pest.symptoms
-                .filter(symptom => symptom.part === selectedProblemArea)
-                .map(symptom => symptom.description)
-                .join('; ');
+            if (matchingPests.length > 0) {
+                pestInfoEl.innerHTML = ''; // Clear previous results
+                
+                matchingPests.forEach(pest => {
+                    // Format symptoms for display
+                    const formattedSymptoms = pest.symptoms
+                        .filter(symptom => symptom.part === selectedProblemArea)
+                        .map(symptom => symptom.description)
+                        .join('; ');
 
-            // Create pest info with image for each pest
-            const pestElement = document.createElement('div');
-            pestElement.className = 'pest-item';
-            pestElement.innerHTML = `
-                <div class="pest-header">
-                    <div>
-                        <div class="pest-name">${pest.name}</div>
-                        <div class="pest-type">${pest.type}</div>
-                    </div>   
-                </div>
-                <img class="pest-image" src="${pest.image}" alt="${pest.name}">
-                <div class="pest-detail"><strong>Plants Affected:</strong> ${pest.plants.join(', ')}</div>
-                <div class="pest-detail"><strong>Affected Parts:</strong> ${pest.affectedParts.join(', ')}</div>
-                <div class="pest-detail"><strong>Symptoms:</strong> ${formattedSymptoms}</div>
-                ${pest.prevention ? `<div class="pest-detail"><strong>Prevention:</strong> ${Array.isArray(pest.prevention) ? pest.prevention.join('; ') : pest.prevention}</div>` : ''}
-                ${pest.control ? `<div class="pest-detail"><strong>Control:</strong> ${Array.isArray(pest.control) ? pest.control.join('; ') : pest.control}</div>` : ''}
-                ${pest.link && pest.link !== "n/a" ? `<a href="${pest.link}" class="pest-link" target="_blank">Learn More About This Pest</a>` : ''}
-                <hr>
-            `;
-            
-            pestInfoEl.appendChild(pestElement);
-        });
+                    // Create pest info with image for each pest
+                    const pestElement = document.createElement('div');
+                    pestElement.className = 'pest-item';
+                    pestElement.innerHTML = `
+                        <div class="pest-header">
+                            <div>
+                                <div class="pest-name">${pest.name}</div>
+                                <div class="pest-type">${pest.type}</div>
+                            </div>   
+                        </div>
+                        <img class="pest-image" src="${pest.image}" alt="${pest.name}">
+                        <div class="pest-detail"><strong>Plants Affected:</strong> ${pest.plants.join(', ')}</div>
+                        <div class="pest-detail"><strong>Affected Parts:</strong> ${pest.affectedParts.join(', ')}</div>
+                        <div class="pest-detail"><strong>Symptoms:</strong> ${formattedSymptoms}</div>
+                        ${pest.prevention ? `<div class="pest-detail"><strong>Prevention:</strong> ${Array.isArray(pest.prevention) ? pest.prevention.join('; ') : pest.prevention}</div>` : ''}
+                        ${pest.control ? `<div class="pest-detail"><strong>Control:</strong> ${Array.isArray(pest.control) ? pest.control.join('; ') : pest.control}</div>` : ''}
+                        ${pest.link && pest.link !== "n/a" ? `<a href="${pest.link}" class="pest-link" target="_blank">Learn More About This Pest</a>` : ''}
+                        <hr>
+                    `;
+                    
+                    pestInfoEl.appendChild(pestElement);
+                });
 
-        resultEl.style.display = 'block';
-        resultEl.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        pestInfoEl.innerHTML = '<div class="no-results">No pests found matching your selection. Please try different symptoms.</div>';
-        resultEl.style.display = 'block';
-    }
-}
+                resultEl.style.display = 'block';
+                resultEl.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                pestInfoEl.innerHTML = '<div class="no-results">No pests found matching your selection. Please try different symptoms.</div>';
+                resultEl.style.display = 'block';
+            }
+        }
 
         // Reset tool state and UI
         function resetTool() {
