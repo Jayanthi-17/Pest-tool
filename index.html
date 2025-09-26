@@ -9,8 +9,9 @@
     <div id="CalculatorContainer"></div>
 
     <script>
+        // Pest data array (same as before)
         const pestData = [
-             {
+            {
                 name: "Anthracnose",
                 type: "Disease (Fungal)",
                 plants: ["Beans", "Cucumbers", "Melons", "Peppers", "Tomatoes"],
@@ -1492,447 +1493,454 @@
                 link: "https://www.almanac.com/pest/scale",
                 image: "https://www.almanac.com/sites/default/files/styles/or/public/image_nodes/control-voles-in-garden.jpg",
                 caption: "Image courtesy: [Photographer/Credit]"
-            }      
+            } 
         ];
+
         // Function to create and inject the CSS
         function injectStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-        #CalculatorContainer * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Georgia', serif; 
-        }
-        
-        #CalculatorContainer {
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        
-        #CalculatorContainer .container {
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            background: #f9f5e8;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-        }
-        
-        #CalculatorContainer header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #ddd4d4;
-        }
-        
-        #CalculatorContainer h2 {
-            color: #ad2a24;
-            margin-bottom: 15px;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        #CalculatorContainer .description {
+            const style = document.createElement('style');
+            style.textContent = `
+                #CalculatorContainer * {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding: 0;
+                    font-family: 'Georgia', serif; 
+                }
+                
+                #CalculatorContainer {
+                    padding: 20px;
+                    display: flex;
+                    justify-content: center;
+                }
+                
+                #CalculatorContainer .container {
+                    max-width: 800px;
+                    width: 100%;
+                    margin: 0 auto;
+                    background: #f9f5e8;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                    padding: 30px;
+                }
+                
+                #CalculatorContainer header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding-bottom: 20px;
+                    border-bottom: 2px solid #ddd4d4;
+                }
+                
+                #CalculatorContainer h2 {
+                    color: #ad2a24;
+                    margin-bottom: 15px;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+                
+                #CalculatorContainer .description {
+                    color: #666;
+                    font-size: 16px;
+                    max-width: 600px;
+                    margin: 0 auto;
+                    line-height: 1.6;
+                }
+                
+                #CalculatorContainer .step {
+                    margin-bottom: 25px;
+                    padding: 20px;
+                    background: #f9f5e8;
+                    border:1px solid #D3D3D3;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                }
+                
+                #CalculatorContainer .step-title {
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                    color: #af6b35;
+                }
+                
+                #CalculatorContainer .form-group {
+                    margin-bottom: 20px;
+                    position: relative;
+                }
+                
+                #CalculatorContainer label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 500;
+                    color: #555;
+                    font-size: 15px;
+                }
+                
+                #CalculatorContainer select {
+                    width: 100%;
+                    padding: 12px;
+                    border: 2px solid #ddd;
+                    border-radius: 8px;
+                    font-size: 15px;
+                    background-color: white;
+                    transition: all 0.3s ease;
+                    appearance: none;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                    background-repeat: no-repeat;
+                    background-position: right 12px center;
+                    background-size: 16px;
+                    padding-right: 40px;
+                }
+                
+                #CalculatorContainer select:disabled {
+                    background-color: #f5f5f5;
+                    color: #999;
+                    cursor: not-allowed;
+                }
+                
+                #CalculatorContainer select:focus {
+                    outline: none;
+                    border-color: #B2BEB5;
+                    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+                }
+                
+                /* Ensure dropdown opens downwards */
+                #CalculatorContainer select option {
+                    padding: 12px;
+                    font-size: 15px;
+                }
+                
+                /* NEW: Scrollable symptoms container */
+                #CalculatorContainer .symptoms-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 12px;
+                    padding: 15px;
+                    background: white;
+                    border: 2px solid #eee;
+                    border-radius: 10px;
+                    max-height: 300px; /* Set maximum height */
+                    overflow-y: auto; /* Enable vertical scrolling */
+                    scrollbar-width: thin; /* For Firefox */
+                    scrollbar-color: #B2BEB5 #f1f1f1; /* For Firefox */
+                }
+                
+                /* Custom scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+                #CalculatorContainer .symptoms-container::-webkit-scrollbar {
+                    width: 8px;
+                }
+                
+                #CalculatorContainer .symptoms-container::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 4px;
+                }
+                
+                #CalculatorContainer .symptoms-container::-webkit-scrollbar-thumb {
+                    background: #B2BEB5;
+                    border-radius: 4px;
+                }
+                
+                #CalculatorContainer .symptoms-container::-webkit-scrollbar-thumb:hover {
+                    background: #9da9a0;
+                }
+                
+                #CalculatorContainer .symptom-option {
+                    flex: 1 0 calc(50% - 12px);
+                    padding: 12px;
+                    border: 2px solid #eee;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    transition: all 0.3s ease;
+                    background: #fafafa;
+                    min-width: 180px;
+                }
+                
+                #CalculatorContainer .symptom-option:hover {
+                    background: #e8f5e8;
+                    border-color: #B2BEB5;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                }
+                
+                #CalculatorContainer .symptom-option input[type="radio"] {
+                    margin-right: 10px;
+                    accent-color: #4CAF50;
+                    transform: scale(1.1);
+                }
+                
+                #CalculatorContainer .symptom-option label {
+                    margin-bottom: 0;
+                    cursor: pointer;
+                    flex-grow: 1;
+                    font-size: 14px;
+                    color: #333;
+                }
+                
+                #CalculatorContainer .result {
+                    margin-top: 25px;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 10px;
+                    display: none;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                }
+                
+                #CalculatorContainer .result h3 {
+                    margin-bottom: 20px;
+                    color: #af6b35;
+                    font-size: 22px;
+                    text-align: center;
+                }
+                
+                #CalculatorContainer .pest-info {
+                    background: white;
+                    padding: 0;
+                    border-radius: 10px;
+                    margin-bottom: 20px;
+                    border: 2px solid #eee;
+                }
+
+                #CalculatorContainer .pest-item {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-bottom: 20px;
+                    border: 2px solid #eee;
+                }
+
+                #CalculatorContainer .pest-item:last-child {
+                    margin-bottom: 0;
+                }
+                
+                #CalculatorContainer .pest-header {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                }
+                
+                #CalculatorContainer .pest-image {
+                    width: 100%;
+                    max-width: 100%;
+                    height: 350px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 2px solid #ddd;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                }
+                
+                #CalculatorContainer .pest-name {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #ad2a24;
+                    margin-bottom: 8px;
+                }
+                
+                #CalculatorContainer .pest-type {
+                    display: inline-block;
+                    background: #e8f5e8;
+                    color: #2e7d32;
+                    padding: 6px 12px;
+                    border-radius: 16px;
+                    font-size: 13px;
+                    font-weight: 500;
+                }
+                
+                #CalculatorContainer .pest-details {
+                    background: #f9f9f9;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin: 15px 0;
+                }
+                
+                #CalculatorContainer .pest-detail {
+                    margin-bottom: 10px;
+                    font-size: 15px;
+                    line-height: 1.6;
+                    color: #444;
+                }
+                
+                #CalculatorContainer .pest-detail strong {
+                    color: #333;
+                    font-weight: 600;
+                }
+                
+                #CalculatorContainer .pest-link {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background: #4CAF50;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 6px;
+                    transition: all 0.3s ease;
+                    margin-top: 12px;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                
+                #CalculatorContainer .pest-link:hover {
+                    background: #3d8b40;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+                }
+                
+                #CalculatorContainer .reset-btn {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background: #666;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    margin-top: 15px;
+                    transition: all 0.3s ease;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                
+                #CalculatorContainer .reset-btn:hover {
+                    background: #555;
+                    transform: translateY(-2px);
+                }
+                
+                #CalculatorContainer .no-results {
+                    text-align: center;
+                    padding: 25px;
+                    color: #666;
+                    font-style: italic;
+                    font-size: 16px;
+                }
+
+                #CalculatorContainer .pest-item hr {
+                    margin: 20px 0;
+                    border: none;
+                    border-top: 2px solid #eee;
+                }
+
+                /* Additional symptom step styling */
+                #CalculatorContainer .additional-symptom-step {
+                    background: #f0f8ff;
+                    border-left: 4px solid #4CAF50;
+                }
+                
+                #CalculatorContainer .additional-symptom-note {
+                    background: #e8f5e8;
+                    padding: 12px;
+                    border-radius: 6px;
+                    margin-bottom: 15px;
+                    font-style: italic;
+                    color: #2e7d32;
+                }
+                #CalculatorContainer .pest-caption {
+            font-size: 12px;
             color: #666;
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        
-        #CalculatorContainer .step {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: #f9f5e8;
-            border:1px solid #D3D3D3;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        #CalculatorContainer .step-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #af6b35;
-        }
-        
-        #CalculatorContainer .form-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-        
-        #CalculatorContainer label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-            font-size: 15px;
-        }
-        
-        #CalculatorContainer select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-            background-color: white;
-            transition: all 0.3s ease;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-            padding-right: 40px;
-        }
-        
-        #CalculatorContainer select:focus {
-            outline: none;
-            border-color: #B2BEB5;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
-        
-        /* Ensure dropdown opens downwards */
-        #CalculatorContainer select option {
-            padding: 12px;
-            font-size: 15px;
-        }
-        
-        /* NEW: Scrollable symptoms container */
-        #CalculatorContainer .symptoms-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding: 15px;
-            background: white;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            max-height: 300px; /* Set maximum height */
-            overflow-y: auto; /* Enable vertical scrolling */
-            scrollbar-width: thin; /* For Firefox */
-            scrollbar-color: #B2BEB5 #f1f1f1; /* For Firefox */
-        }
-        
-        /* Custom scrollbar for Webkit browsers (Chrome, Safari, Edge) */
-        #CalculatorContainer .symptoms-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        #CalculatorContainer .symptoms-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        #CalculatorContainer .symptoms-container::-webkit-scrollbar-thumb {
-            background: #B2BEB5;
-            border-radius: 4px;
-        }
-        
-        #CalculatorContainer .symptoms-container::-webkit-scrollbar-thumb:hover {
-            background: #9da9a0;
-        }
-        
-        #CalculatorContainer .symptom-option {
-            flex: 1 0 calc(50% - 12px);
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            background: #fafafa;
-            min-width: 180px;
-        }
-        
-        #CalculatorContainer .symptom-option:hover {
-            background: #e8f5e8;
-            border-color: #B2BEB5;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        #CalculatorContainer .symptom-option input[type="radio"] {
-            margin-right: 10px;
-            accent-color: #4CAF50;
-            transform: scale(1.1);
-        }
-        
-        #CalculatorContainer .symptom-option label {
-            margin-bottom: 0;
-            cursor: pointer;
-            flex-grow: 1;
-            font-size: 14px;
-            color: #333;
-        }
-        
-        #CalculatorContainer .result {
-            margin-top: 25px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            display: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        #CalculatorContainer .result h3 {
-            margin-bottom: 20px;
-            color: #af6b35;
-            font-size: 22px;
-            text-align: center;
-        }
-        
-        #CalculatorContainer .pest-info {
-            background: white;
-            padding: 0;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #eee;
-        }
-
-        #CalculatorContainer .pest-item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #eee;
-        }
-
-        #CalculatorContainer .pest-item:last-child {
-            margin-bottom: 0;
-        }
-        
-        #CalculatorContainer .pest-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        #CalculatorContainer .pest-image {
-            width: 100%;
-            max-width: 100%;
-            height: 350px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        #CalculatorContainer .pest-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ad2a24;
-            margin-bottom: 8px;
-        }
-        
-        #CalculatorContainer .pest-type {
-            display: inline-block;
-            background: #e8f5e8;
-            color: #2e7d32;
-            padding: 6px 12px;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        
-        #CalculatorContainer .pest-details {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        
-        #CalculatorContainer .pest-detail {
-            margin-bottom: 10px;
-            font-size: 15px;
-            line-height: 1.6;
-            color: #444;
-        }
-        
-        #CalculatorContainer .pest-detail strong {
-            color: #333;
-            font-weight: 600;
-        }
-        
-        #CalculatorContainer .pest-link {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            margin-top: 12px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        #CalculatorContainer .pest-link:hover {
-            background: #3d8b40;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-        }
-        
-        #CalculatorContainer .reset-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #666;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        #CalculatorContainer .reset-btn:hover {
-            background: #555;
-            transform: translateY(-2px);
-        }
-        
-        #CalculatorContainer .no-results {
-            text-align: center;
-            padding: 25px;
-            color: #666;
+            margin-top: 5px;
+            margin-bottom:5px;
             font-style: italic;
-            font-size: 16px;
+            text-align: center;
         }
 
-        #CalculatorContainer .pest-item hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 2px solid #eee;
+                
+                /* Mobile responsiveness */
+                @media (max-width: 768px) {
+                    #CalculatorContainer {
+                        padding: 10px;
+                    }
+                    
+                    #CalculatorContainer .container {
+                        padding: 20px;
+                        max-width: 95%;
+                    }
+                    
+                    #CalculatorContainer h1 {
+                        font-size: 22px;
+                    }
+                    
+                    #CalculatorContainer .description {
+                        font-size: 14px;
+                    }
+                    
+                    #CalculatorContainer .step {
+                        padding: 15px;
+                    }px;
+                    
+                    #CalculatorContainer .step-title {
+                        font-size: 18px;
+                    }
+                    
+                    #CalculatorContainer .symptom-option {
+                        flex: 1 0 100%;
+                    }
+                    
+                    #CalculatorContainer .pest-image {
+                        height: 250px;
+                    }
+                    
+                    #CalculatorContainer .pest-name {
+                        font-size: 20px;
+                    }
+                    
+                    /* Adjust scrollable container for mobile */
+                    #CalculatorContainer .symptoms-container {
+                        max-height: 250px; /* Smaller max-height on mobile */
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    #CalculatorContainer .container {
+                        padding: 15px;
+                    }
+                    
+                    #CalculatorContainer h1 {
+                        font-size: 20px;
+                    }
+                    
+                    #CalculatorContainer .pest-image {
+                        height: 200px;
+                    }
+                    
+                    #CalculatorContainer .pest-name {
+                        font-size: 18px;
+                    }
+                    
+                    #CalculatorContainer .pest-detail {
+                        font-size: 14px;
+                    }
+                    
+                    #CalculatorContainer .symptoms-container {
+                        max-height: 200px; /* Even smaller on very small screens */
+                    }
+                }
+                
+                /* Improved focus states for accessibility */
+                #CalculatorContainer select:focus,
+                #CalculatorContainer .symptom-option input[type="radio"]:focus + label {
+                    outline: 2px solid #B2BEB5;
+                    outline-offset: 2px;
+                }
+                
+                /* Smooth animations */
+                #CalculatorContainer .step,
+                #CalculatorContainer .symptom-option,
+                #CalculatorContainer .pest-item {
+                    transition: all 0.3s ease;
+                }
+                
+                /* Ensure dropdown opens properly */
+                #CalculatorContainer select {
+                    z-index: 1;
+                }
+                
+                #CalculatorContainer select option {
+                    background: white;
+                    color: #333;
+                }
+            `;
+            document.head.appendChild(style);
         }
-
-        /* Additional symptom step styling */
-        #CalculatorContainer .additional-symptom-step {
-            background: #f0f8ff;
-            border-left: 4px solid #4CAF50;
-        }
-        
-        #CalculatorContainer .additional-symptom-note {
-            background: #e8f5e8;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-style: italic;
-            color: #2e7d32;
-        }
-        #CalculatorContainer .pest-caption {
-    font-size: 12px;
-    color: #666;
-    margin-top: 5px;
-    margin-bottom:5px;
-    font-style: italic;
-    text-align: center;
-}
-
-        
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            #CalculatorContainer {
-                padding: 10px;
-            }
-            
-            #CalculatorContainer .container {
-                padding: 20px;
-                max-width: 95%;
-            }
-            
-            #CalculatorContainer h1 {
-                font-size: 22px;
-            }
-            
-            #CalculatorContainer .description {
-                font-size: 14px;
-            }
-            
-            #CalculatorContainer .step {
-                padding: 15px;
-            }px;
-            
-            #CalculatorContainer .step-title {
-                font-size: 18px;
-            }
-            
-            #CalculatorContainer .symptom-option {
-                flex: 1 0 100%;
-            }
-            
-            #CalculatorContainer .pest-image {
-                height: 250px;
-            }
-            
-            #CalculatorContainer .pest-name {
-                font-size: 20px;
-            }
-            
-            /* Adjust scrollable container for mobile */
-            #CalculatorContainer .symptoms-container {
-                max-height: 250px; /* Smaller max-height on mobile */
-            }
-        }
-        
-        @media (max-width: 480px) {
-            #CalculatorContainer .container {
-                padding: 15px;
-            }
-            
-            #CalculatorContainer h1 {
-                font-size: 20px;
-            }
-            
-            #CalculatorContainer .pest-image {
-                height: 200px;
-            }
-            
-            #CalculatorContainer .pest-name {
-                font-size: 18px;
-            }
-            
-            #CalculatorContainer .pest-detail {
-                font-size: 14px;
-            }
-            
-            #CalculatorContainer .symptoms-container {
-                max-height: 200px; /* Even smaller on very small screens */
-            }
-        }
-        
-        /* Improved focus states for accessibility */
-        #CalculatorContainer select:focus,
-        #CalculatorContainer .symptom-option input[type="radio"]:focus + label {
-            outline: 2px solid #B2BEB5;
-            outline-offset: 2px;
-        }
-        
-        /* Smooth animations */
-        #CalculatorContainer .step,
-        #CalculatorContainer .symptom-option,
-        #CalculatorContainer .pest-item {
-            transition: all 0.3s ease;
-        }
-        
-        /* Ensure dropdown opens properly */
-        #CalculatorContainer select {
-            z-index: 1;
-        }
-        
-        #CalculatorContainer select option {
-            background: white;
-            color: #333;
-        }
-    `;
-    document.head.appendChild(style);
-}
 
         // Function to create the HTML structure
         function createHTMLStructure() {
@@ -1956,13 +1964,12 @@
                         </div>
                     </div>
                     
-                    <div class="step" id="problem-area-step" style="display: none;">
+                    <div class="step" id="problem-area-step">
                         <h2 class="step-title">Step 2: Select Problem Area</h2>
                         <div class="form-group">
                             <label for="problem-area-select">Where is the problem located?</label>
-                            <select id="problem-area-select">
-                                <option value="">-- Select problem area --</option>
-                                <!-- Problem area options will be populated by JavaScript -->
+                            <select id="problem-area-select" disabled>
+                                <option value="">First, select a plant.</option>
                             </select>
                         </div>
                     </div>
@@ -2040,7 +2047,8 @@
             selectedPlant = plantSelectEl.value;
 
             if (selectedPlant) {
-                problemAreaStepEl.style.display = 'block';
+                // Enable the problem area select and populate it
+                problemAreaSelectEl.disabled = false;
                 problemAreaSelectEl.innerHTML = '<option value="">-- Select problem area --</option>';
 
                 let affectedPartsForPlant = [...new Set(pestData
@@ -2064,7 +2072,9 @@
                 symptomsContainerEl.innerHTML = '';
                 additionalSymptomsContainerEl.innerHTML = '';
             } else {
-                problemAreaStepEl.style.display = 'none';
+                // Disable the problem area select and reset it
+                problemAreaSelectEl.disabled = true;
+                problemAreaSelectEl.innerHTML = '<option value="">First, select a plant.</option>';
                 symptomsStepEl.style.display = 'none';
                 additionalSymptomsStepEl.style.display = 'none';
                 resultEl.style.display = 'none';
@@ -2324,6 +2334,8 @@
 
             plantSelectEl.value = '';
             problemAreaSelectEl.value = '';
+            problemAreaSelectEl.disabled = true;
+            problemAreaSelectEl.innerHTML = '<option value="">First, select a plant.</option>';
             symptomsContainerEl.innerHTML = '';
             additionalSymptomsContainerEl.innerHTML = '';
 
@@ -2333,7 +2345,6 @@
             const additionalRadios = document.querySelectorAll('input[name="additional-symptom"]');
             additionalRadios.forEach(radio => radio.checked = false);
 
-            problemAreaStepEl.style.display = 'none';
             symptomsStepEl.style.display = 'none';
             additionalSymptomsStepEl.style.display = 'none';
             resultEl.style.display = 'none';
